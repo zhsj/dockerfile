@@ -11,7 +11,7 @@ RUN set -x \
     && cd $SS_DIR \
         && ./configure --disable-documentation \
         && make \
-        && install -m755 src/ss-server /usr/local/bin/
+        && install -m755 src/ss-server /usr/local/bin/ \
         && cd .. \
         && rm -rf $SS_DIR \
     && apk del --purge $SS_DEP \
