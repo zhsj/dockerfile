@@ -14,7 +14,7 @@ RUN set -x \
         && install -m755 src/ss-server /usr/local/bin/ \
         && cd .. \
         && rm -rf $SS_DIR \
-    && apk del --purge $SS_DEP \
+    && apk del --purge $SS_BUILD_DEP \
     && rm -rf /var/cache/apk/*
 
 ENV SERVER_ADDR=0.0.0.0 \
