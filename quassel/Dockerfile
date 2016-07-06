@@ -1,21 +1,20 @@
 FROM alpine
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>¬
 
-ENV QS_VER=0.12.4
-ENV QS_URL=https://github.com/quassel/quassel/archive/$QS_VER.tar.gz \
-    QS_DIR=quassel-$QS_VER \
-    QS_BUILD_DEP="curl cmake build-base qt5-qtbase-dev qt5-qtscript-dev" \
+ENV QS_GIT=https://github.com/quassel/quassel \
+    QS_DIR=quassel \
+    QS_BUILD_DEP="git cmake build-base qt5-qtbase-dev qt5-qtscript-dev" \
     QS_DEP="qt5-qtbase qt5-qtbase-sqlite qt5-qtscript"
 
-RUN set -ex \
+RUN set -x \
     && apk add --update $QS_DEP $QS_BUILD_DEP \
-    && curl -sSL $QS_URL | tar xz \
+    && git clone $QS_GIT $QS_DIR \
     && cd $QS_DIR \
         && cmake . -DWANT_CORE=ON -DWANT_QTCLIENT=OFF -DWANT_MONO=OFF \
            -DUSE_QT5=ON -DWITH_KDE=OFF -DWITH_OXYGEN=OFF -DWITH_WEBKIT=OFF \
-           -DHAVE_SSL=ON \
+           -DHAVE_SSL=ON -DCMAKE_BUILD_TYPE=Release \
         && make \
-        && make install \
+        && install -m755 quasselcore /usr/local/bin \
         && cd .. \
         && rm -rf $QS_DIR \
     && apk del --purge $QS_BUILD_DEP \
