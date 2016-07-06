@@ -3,7 +3,7 @@ MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
 ENV SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
     SS_DIR=shadowsocks-libev \
-    SS_BUILD_DEP="git autoconf build-base curl libtool linux-headers openssl-dev"
+    SS_BUILD_DEP="git autoconf build-base libtool linux-headers openssl-dev"
 
 RUN set -x \
     && apk add --update $SS_BUILD_DEP \
@@ -11,6 +11,7 @@ RUN set -x \
     && cd $SS_DIR \
         && ./configure --disable-documentation \
         && make \
+        && strip src/ss-server \
         && install -m755 src/ss-server /usr/local/bin/ \
         && cd .. \
         && rm -rf $SS_DIR \
