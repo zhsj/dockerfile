@@ -14,6 +14,7 @@ RUN set -x \
            -DUSE_QT5=ON -DWITH_KDE=OFF -DWITH_OXYGEN=OFF -DWITH_WEBKIT=OFF \
            -DHAVE_SSL=ON -DCMAKE_BUILD_TYPE=Release \
         && make \
+        && strip quasselcore \
         && install -m755 quasselcore /usr/local/bin \
         && cd .. \
         && rm -rf $QS_DIR \
