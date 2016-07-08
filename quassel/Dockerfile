@@ -8,6 +8,7 @@ ENV QT_DIST=/usr/local/Qt-$QT_VER \
     QT_SCRIPT_SRC=https://download.qt.io/official_releases/qt/5.7/5.7.0/submodules/qtscript-opensource-src-$QT_VER.tar.xz \
     QT_SCRIPT_DIR=qtscript-opensource-src-$QT_VER \
     BUILD_DEP="bash build-base openssl-dev linux-headers curl git cmake" \
+    QS_GIT=https://github.com/quassel/quassel.git \
     QS_DIR=quassel \
     QS_DEP="libgcc libstdc++"
 
