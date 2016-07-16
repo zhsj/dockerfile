@@ -30,6 +30,7 @@ RUN sh -x \
     && cd public/themes/ \
     && curl -sSL $THEME_TAR | tar xz redmine-theme-minimalflat2-master/src \
     && mv redmine-theme-minimalflat2-master/src minimalflat2 \
+    && rm -r redmine-theme-minimalflat2-master \
     && rm -rf ~/.bundle/ \
     && apk --purge del .redmine-builddpes \
     && rm -rf /var/cache/apk/* \
