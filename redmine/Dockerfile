@@ -6,7 +6,7 @@ ENV REDMINE_VERSION=3.3.0 \
     GOSU_VERSION=1.9
 
 ENV REDMINE_TAR="https://github.com/redmine/redmine/archive/$REDMINE_VERSION.tar.gz" \
-    THEME_TAR="https://github.com/hardpixel/minelab/archive/master.tar.gz" \
+    THEME_TAR="https://github.com/akabekobeko/redmine-theme-minimalflat2/archive/master.tar.gz" \
     GOSU_BIN="https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64" \
     RAILS_ENV=production \
     BUNDLE_SILENCE_ROOT_WARNING=1
@@ -28,8 +28,8 @@ RUN sh -x \
     && echo "  database: files/redmine.sqlite3" >> config/database.yml \
     && bundle install --without development test \
     && cd public/themes/ \
-    && curl -sSL $THEME_TAR | tar xz \
-    && mv minelab-master minelab \
+    && curl -sSL $THEME_TAR | tar xz redmine-theme-minimalflat2-master/src \
+    && mv redmine-theme-minimalflat2-master/src minimalflat2 \
     && rm -rf ~/.bundle/ \
     && apk --purge del .redmine-builddpes \
     && rm -rf /var/cache/apk/* \
