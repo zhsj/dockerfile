@@ -32,6 +32,7 @@ RUN sh -x \
     && unzip minimalflat2.zip \
     && rm minimalflat2.zip \
     && rm -rf ~/.bundle/ \
+    && rm -rf /usr/lib/ruby/gems/*/cache/* \
     && apk --purge del .redmine-builddpes \
     && rm -rf /var/cache/apk/* \
     && adduser -h ${PWD} -D -H -s /sbin/nologin redmine \
