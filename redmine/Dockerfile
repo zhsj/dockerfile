@@ -14,9 +14,9 @@ ENV REDMINE_TAR="https://github.com/redmine/redmine/archive/$REDMINE_VERSION.tar
 RUN sh -x \
     && cd / \
     && apk --update add --virtual .redmine-rundeps \
-         ruby ruby-bundler ruby-bigdecimal git imagemagick sqlite-libs tzdata \
+         ruby ruby-bundler ruby-bigdecimal sqlite-libs tzdata git \
     && apk add --virtual .redmine-builddpes \
-         curl build-base ruby-dev imagemagick-dev sqlite-dev zlib-dev \
+         curl build-base ruby-dev sqlite-dev zlib-dev \
     && curl -sSL $GOSU_BIN -o /usr/local/bin/gosu \
     && chmod +x /usr/local/bin/gosu \
     && curl -sSL $REDMINE_TAR | tar xz \
@@ -26,7 +26,7 @@ RUN sh -x \
     && echo "$RAILS_ENV:" > config/database.yml \
     && echo "  adapter: sqlite3" >> config/database.yml \
     && echo "  database: files/redmine.sqlite3" >> config/database.yml \
-    && bundle install --without development test \
+    && bundle install --without development test rmagick \
     && cd public/themes/ \
     && curl -sSL $THEME_ZIP -o minimalflat2.zip \
     && unzip minimalflat2.zip \
@@ -40,7 +40,7 @@ RUN sh -x \
 
 WORKDIR /redmine
 
-VOLUME ["/redmine/files"]
+VOLUME ["/redmine/files", "/gitrepo"]
 
 COPY docker-entrypoint.sh /
 
