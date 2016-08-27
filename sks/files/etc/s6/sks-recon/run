@@ -1,0 +1,3 @@
+#!/bin/sh
+s6-svwait /etc/s6/sks-db
+sks -stdoutlog -basedir /var/lib/sks recon

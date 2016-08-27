@@ -1,0 +1,9 @@
+hostname: sks.ustclug.org
+recon_address: 0.0.0.0
+recon_port: 11370
+hkp_address: 0.0.0.0
+hkp_port: 11371
+initial_stat:
+disable_mailsync:
+pagesize:          16
+ptree_pagesize:    16
