@@ -11,5 +11,8 @@ fi
 if [ ! -e membership ]; then
     cp /etc/sks/membership .
 fi
+if [ ! -e web ]; then
+    cp -r /etc/sks/web .
+fi
 
 s6-svscan /etc/s6
