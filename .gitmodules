@@ -1,0 +1,3 @@
+[submodule "sks/files/etc/sks/web"]
+	path = sks/files/etc/sks/web
+	url = https://git.ustclug.org/ustclug/sks-index.git

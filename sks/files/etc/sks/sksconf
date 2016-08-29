@@ -1,4 +1,6 @@
+debuglevel: 1
 hostname: sks.ustclug.org
+server_contact: 0xABCDEFGH
 recon_address: 0.0.0.0
 recon_port: 11370
 hkp_address: 0.0.0.0
