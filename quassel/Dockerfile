@@ -18,12 +18,12 @@ RUN set -ex \
         -no-gif -no-libpng -no-libjpeg -qt-doubleconversion -no-freetype -no-harfbuzz -openssl-linked -qt-pcre \
         -no-xkbcommon-evdev -no-xinput2 -no-xcb-xlib -no-glib -no-pulseaudio -no-alsa -no-gtk -no-compile-examples \
         -no-gui -no-dbus -nomake tools -nomake examples \
-      && make install \
+      && make -j install \
       && cd .. \
     && curl -sSL $QT_SCRIPT_SRC | tar xJ \
     && cd $QT_SCRIPT_DIR \
       && $QT_DIST/bin/qmake \
-      && make install \
+      && make -j install \
       && cd .. \
     && git clone $QS_GIT $QS_DIR \
     && cd $QS_DIR \
@@ -33,7 +33,7 @@ RUN set -ex \
            -DUSE_QT5=ON -DWITH_KDE=OFF -DWITH_OXYGEN=OFF -DWITH_WEBKIT=OFF \
            -DHAVE_SSL=ON -DCMAKE_BUILD_TYPE=Release -DSTATIC=ON -DCMAKE_PREFIX_PATH=$QT_DIST \
            -DLINK_EXTRA=qtpcre \
-        && make \
+        && make -j \
         && strip quasselcore \
         && install -m755 quasselcore /usr/local/bin \
         && cd .. \

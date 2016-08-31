@@ -13,7 +13,7 @@ RUN set -ex \
         && make dep \
         && make cryptokit-1.7/README.txt \
         && sed -i 's/uint32/uint32_t/g' cryptokit-1.7/src/stubs-md5.c \
-        && make sks \
+        && make -j sks \
         && strip sks \
         && install -m755 sks /usr/sbin/sks \
     && cd .. \

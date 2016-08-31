@@ -8,7 +8,7 @@ RUN set -ex \
     && git clone $SS_GIT $SS_DIR \
     && cd $SS_DIR \
         && ./configure --disable-documentation \
-        && make \
+        && make -j \
         && strip src/ss-server \
         && install -m755 src/ss-server /usr/local/bin/ \
         && cd .. \
