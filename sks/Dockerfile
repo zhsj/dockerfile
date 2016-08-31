@@ -1,7 +1,7 @@
 FROM alpine:edge
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
-RUN set -x \
+RUN set -ex \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && apk --update add --virtual .sks-deps db-utils libgcc s6 \
     && apk add --virtual .sks-builddeps \
@@ -18,8 +18,10 @@ RUN set -x \
         && install -m755 sks /usr/sbin/sks \
     && cd .. \
     && apk --purge del .sks-builddeps \
+    && rm -rf /var/cache/apk/* \
     && rm -rf sks-keyserver \
     && mkdir -p /var/lib/sks
+
 ADD files /
 VOLUME /var/lib/sks
 EXPOSE 11371 11370

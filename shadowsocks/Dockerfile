@@ -1,12 +1,10 @@
 FROM alpine
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
-ENV SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
-    SS_DIR=shadowsocks-libev \
-    SS_BUILD_DEP="git autoconf build-base libtool linux-headers openssl-dev"
-
-RUN set -x \
-    && apk add --update $SS_BUILD_DEP \
+RUN set -ex \
+    && export SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
+    && export SS_DIR=shadowsocks-libev \
+    && apk add --update --virtual .ss-builddeps git autoconf build-base libtool linux-headers openssl-dev \
     && git clone $SS_GIT $SS_DIR \
     && cd $SS_DIR \
         && ./configure --disable-documentation \
@@ -15,7 +13,7 @@ RUN set -x \
         && install -m755 src/ss-server /usr/local/bin/ \
         && cd .. \
         && rm -rf $SS_DIR \
-    && apk del --purge $SS_BUILD_DEP \
+    && apk del --purge .ss-builddeps \
     && rm -rf /var/cache/apk/*
 
 ENV SERVER_ADDR=0.0.0.0 \

@@ -1,19 +1,17 @@
 FROM alpine
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>¬
 
-ENV QT_VER=5.7.0
-ENV QT_DIST=/usr/local/Qt-$QT_VER \
-    QT_BASE_SRC=https://download.qt.io/official_releases/qt/5.7/5.7.0/submodules/qtbase-opensource-src-$QT_VER.tar.xz \
-    QT_BASE_DIR=qtbase-opensource-src-$QT_VER \
-    QT_SCRIPT_SRC=https://download.qt.io/official_releases/qt/5.7/5.7.0/submodules/qtscript-opensource-src-$QT_VER.tar.xz \
-    QT_SCRIPT_DIR=qtscript-opensource-src-$QT_VER \
-    BUILD_DEP="bash build-base openssl-dev linux-headers curl git cmake" \
-    QS_GIT=https://github.com/quassel/quassel.git \
-    QS_DIR=quassel \
-    QS_DEP="libgcc libstdc++"
-
-RUN set -x \
-    && apk add --update $BUILD_DEP $QS_DEP \
+RUN set -ex \
+    && export QT_VER=5.7.0 \
+    && export QT_DIST=/usr/local/Qt-"$QT_VER" \
+    && export QT_BASE_SRC=https://download.qt.io/official_releases/qt/"${QT_VER%.*}"/"$QT_VER"/submodules/qtbase-opensource-src-"$QT_VER".tar.xz \
+    && export QT_BASE_DIR=qtbase-opensource-src-"$QT_VER" \
+    && export QT_SCRIPT_SRC=https://download.qt.io/official_releases/qt/"${QT_VER%.*}"/"$QT_VER"/submodules/qtscript-opensource-src-"$QT_VER".tar.xz \
+    && export QT_SCRIPT_DIR=qtscript-opensource-src-"$QT_VER" \
+    && export QS_GIT=https://github.com/quassel/quassel.git \
+    && export QS_DIR=quassel \
+    && apk add --update --virtual .qs-deps libgcc libstdc++ \
+    && apk add --virtual .qs-builddeps bash build-base openssl-dev linux-headers curl git cmake \
     && curl -sSL $QT_BASE_SRC | tar xJ \
     && cd $QT_BASE_DIR \
       && bash ./configure -opensource -confirm-license -static -no-accessibility -qt-sql-sqlite -no-qml-debug \
@@ -40,14 +38,10 @@ RUN set -x \
         && install -m755 quasselcore /usr/local/bin \
         && cd .. \
     && rm -rf $QS_DIR $QT_BASE_DIR $QT_SCRIPT_DIR $QT_DIST \
-    && apk del --purge $BUILD_DEP \
+    && apk del --purge .qs-builddeps \
     && rm -rf /var/cache/apk/* \
     && mkdir /var/lib/quassel
 
-USER root
-
 VOLUME ["/var/lib/quassel"]
-
 ENTRYPOINT ["quasselcore", "--configdir=/var/lib/quassel/"]
-
 EXPOSE 4242
