@@ -8,3 +8,4 @@ Sample command to run:
 
 ```
 docker run -it -d --name ss-server -e PASSWORD=password zhusj/shadowsocks
+```
