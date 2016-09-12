@@ -17,19 +17,12 @@ RUN set -ex \
     && apk del --purge .ss-builddeps \
     && rm -rf /var/cache/apk/*
 
-ENV SERVER_ADDR=0.0.0.0 \
-    SERVER_PORT=8388 \
-    PASSWORD= \
-    METHOD=chacha20 \
-    TIMEOUT=300 \
-    DNS_ADDR=8.8.8.8
+EXPOSE 8388 8388/udp
 
-EXPOSE $SERVER_PORT $SERVER_PORT/udp
-
-CMD ss-server -s $SERVER_ADDR \
-              -p $SERVER_PORT \
+CMD ss-server -s ${SERVER_ADDR:-0.0.0.0} \
+              -p ${SERVER_PORT:-8388} \
               -k ${PASSWORD:-$(hostname)} \
-              -m $METHOD \
-              -t $TIMEOUT \
-              -d $DNS_ADDR \
+              -m ${METHOD:-chacha20} \
+              -t ${TIMEOUT:-300} \
+              -d ${DNS_ADDR:-8.8.8.8} \
               --fast-open -u -A
