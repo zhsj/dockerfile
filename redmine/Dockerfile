@@ -5,8 +5,9 @@ MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 RUN set -ex \
     && export REDMINE_VERSION=3.3.1 \
     && export GOSU_VERSION=1.10 \
+    && export THEME_VERSION=v1.2.1
     && export REDMINE_TAR=https://github.com/redmine/redmine/archive/"$REDMINE_VERSION".tar.gz \
-    && export THEME_ZIP=https://github.com/akabekobeko/redmine-theme-minimalflat2/archive/master.zip \
+    && export THEME_ZIP=https://github.com/akabekobeko/redmine-theme-minimalflat2/releases/download/"$THEME_VERSION"/minimalflat2-"$THEME_VERSION".zip
     && export GOSU_BIN=https://github.com/tianon/gosu/releases/download/"$GOSU_VERSION"/gosu-amd64 \
     && export RAILS_ENV=production \
     && export BUNDLE_SILENCE_ROOT_WARNING=1 \
