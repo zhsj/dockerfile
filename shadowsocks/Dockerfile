@@ -1,10 +1,10 @@
-FROM alpine
+FROM alpine:edge
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
 RUN set -ex \
     && export SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
     && export SS_DIR=shadowsocks-libev \
-    && apk add --update --virtual .ss-builddeps git autoconf build-base libtool linux-headers openssl-dev pcre-dev \
+    && apk add --update --virtual .ss-builddeps git autoconf build-base libtool linux-headers libressl-dev pcre-dev zlib-dev \
     && apk add --virtual .ss-deps pcre \
     && git clone $SS_GIT $SS_DIR \
     && cd $SS_DIR \
@@ -17,7 +17,7 @@ RUN set -ex \
     && apk del --purge .ss-builddeps \
     && rm -rf /var/cache/apk/*
 
-EXPOSE 8388 8388/udp
+EXPOSE 443 443/udp
 
 CMD ss-server -s ${SERVER_ADDR:-0.0.0.0} \
               -p ${SERVER_PORT:-8388} \
