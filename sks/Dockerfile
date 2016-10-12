@@ -3,7 +3,8 @@ MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
 RUN set -ex \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-    && apk --update add --virtual .sks-deps db-utils libgcc s6 \
+    && apk pgrade --update \
+    && apk add --virtual .sks-deps db-utils libgcc s6 \
     && apk add --virtual .sks-builddeps \
         build-base camlp4 curl db-dev zlib-dev \
     && curl -sSL https://bitbucket.org/skskeyserver/sks-keyserver/get/1.1.6.tar.gz | tar xz \

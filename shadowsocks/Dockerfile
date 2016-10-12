@@ -4,7 +4,8 @@ MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 RUN set -ex \
     && export SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
     && export SS_DIR=shadowsocks-libev \
-    && apk add --update --virtual .ss-builddeps git autoconf build-base libtool linux-headers libressl-dev pcre-dev zlib-dev \
+    && apk upgrade --update \
+    && apk add --virtual .ss-builddeps git autoconf build-base libtool linux-headers libressl-dev pcre-dev zlib-dev \
     && apk add --virtual .ss-deps pcre \
     && git clone $SS_GIT $SS_DIR \
     && cd $SS_DIR \
