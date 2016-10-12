@@ -3,10 +3,10 @@ FROM alpine
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
 RUN set -ex \
-    && export REDMINE_VERSION=3.3.0 \
-    && export GOSU_VERSION=1.9 \
+    && export REDMINE_VERSION=3.3.1 \
+    && export GOSU_VERSION=1.10 \
     && export REDMINE_TAR=https://github.com/redmine/redmine/archive/"$REDMINE_VERSION".tar.gz \
-    && export THEME_ZIP=https://github.com/akabekobeko/redmine-theme-minimalflat2/releases/download/v1.2.1/minimalflat2-v1.2.1.zip \
+    && export THEME_ZIP=https://github.com/akabekobeko/redmine-theme-minimalflat2/archive/master.zip \
     && export GOSU_BIN=https://github.com/tianon/gosu/releases/download/"$GOSU_VERSION"/gosu-amd64 \
     && export RAILS_ENV=production \
     && export BUNDLE_SILENCE_ROOT_WARNING=1 \
@@ -26,9 +26,9 @@ RUN set -ex \
     && echo "  database: files/redmine.sqlite3" >> config/database.yml \
     && bundle install --without development test rmagick \
     && cd public/themes/ \
-    && curl -sSL $THEME_ZIP -o minimalflat2.zip \
-    && unzip minimalflat2.zip \
-    && rm minimalflat2.zip \
+        && curl -sSL $THEME_ZIP -o minimalflat2.zip \
+        && unzip minimalflat2.zip \
+        && rm minimalflat2.zip \
     && rm -rf ~/.bundle/ \
     && rm -rf /usr/lib/ruby/gems/*/cache/* \
     && apk --purge del .redmine-builddpes \
