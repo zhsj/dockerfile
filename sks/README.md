@@ -1,5 +1,7 @@
 # SKS Key Server
 
+![](https://images.microbadger.com/badges/image/zhusj/sks.svg)
+
 ## Intro
 
 This is [SKS Key Server](https://bitbucket.org/skskeyserver/sks-keyserver) unofficial Dockerfile.

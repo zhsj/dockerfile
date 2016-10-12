@@ -1,5 +1,7 @@
 # Quassel Core
 
+[![](https://images.microbadger.com/badges/image/zhusj/quassel.svg)]
+
 ## Intro
 
 This only contains Quassel server part binary. It is statically linked with

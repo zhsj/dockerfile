@@ -1,5 +1,7 @@
 # Shadowsocks
 
+![](https://images.microbadger.com/badges/image/zhusj/shadowsocks.svg)
+
 Only ss-server is included.
 
 ## Guide
