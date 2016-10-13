@@ -21,7 +21,7 @@ RUN set -ex \
 EXPOSE 443 443/udp
 
 CMD ss-server -s ${SERVER_ADDR:-0.0.0.0} \
-              -p ${SERVER_PORT:-8388} \
+              -p ${SERVER_PORT:-443} \
               -k ${PASSWORD:-$(hostname)} \
               -m ${METHOD:-chacha20} \
               -t ${TIMEOUT:-300} \
