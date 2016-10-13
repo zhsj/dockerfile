@@ -1,6 +1,6 @@
 # Quassel Core
 
-[![](https://images.microbadger.com/badges/image/zhusj/quassel.svg)]
+![](https://images.microbadger.com/badges/image/zhusj/quassel.svg)
 
 ## Intro
 
