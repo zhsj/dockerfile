@@ -22,6 +22,7 @@ RUN set -ex \
         && strip /go/bin/server \
         && install -m755 /go/bin/server /usr/local/bin/kcptun-server \
         && rm -rf /go \
+        && rm -rf /usr/lib/go/pkg \
     && apk del --purge .ss-builddeps \
     && rm -rf /var/cache/apk/*
 
