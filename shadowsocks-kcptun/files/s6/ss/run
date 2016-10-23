@@ -8,6 +8,4 @@ multisubstitute
   import -D 300 TIMEOUT
   import -D 8.8.8.8 DNS_ADDR
 }
-ss-server -s $SERVER_ADDR -p $SERVER_PORT \
-          -k $PASSWORD -m $METHOD -t $TIMEOUT \
-          -d $DNS_ADDR --fast-open -u -A
+ss-server -s $SERVER_ADDR -p $SERVER_PORT -k $PASSWORD -m $METHOD -t $TIMEOUT -d $DNS_ADDR --fast-open -u -A
