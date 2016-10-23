@@ -34,16 +34,16 @@ RUN set -ex \
     && rm -rf /usr/lib/ruby/gems/*/cache/* \
     && apk --purge del .redmine-builddpes \
     && rm -rf /var/cache/apk/* \
-    && adduser -h ${PWD} -D -H -s /sbin/nologin redmine \
+    && adduser -h /redmine -D -H -s /sbin/nologin redmine \
     && chown -R redmine:redmine /redmine
 
 WORKDIR /redmine
 
 VOLUME ["/redmine/files", "/gitrepo"]
 
-COPY entrypoint.sh /
+COPY entrypoint.sh /usr/local/bin/
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 3000
 

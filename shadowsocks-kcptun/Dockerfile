@@ -26,7 +26,7 @@ RUN set -ex \
     && apk del --purge .ss-builddeps \
     && rm -rf /var/cache/apk/*
 
-ADD files /etc/
+ADD files /usr/local/
 EXPOSE 443 443/udp 444/udp
 
-CMD ["s6-svscan", "/etc/s6"]
+CMD ["s6-svscan", "/usr/local/etc/s6"]

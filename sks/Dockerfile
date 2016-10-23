@@ -23,7 +23,7 @@ RUN set -ex \
     && rm -rf sks-keyserver \
     && mkdir -p /var/lib/sks
 
-ADD files /
+ADD files /usr/local/
 VOLUME /var/lib/sks
 EXPOSE 11371 11370
-CMD ["s6-svscan", "/etc/s6"]
+CMD ["s6-svscan", "/usr/local/etc/s6"]

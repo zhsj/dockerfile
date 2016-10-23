@@ -10,6 +10,6 @@ multisubstitute
 }
 foreground
 {
-  s6-svwait /etc/s6/ss
+  s6-svwait /usr/local/etc/s6/ss
 }
 kcptun-server -l :$KCPTUN_PORT -t 127.0.0.1:$SERVER_PORT --crypt $KCPTUN_CRYPT --mtu $KCPTUN_MTU --nocomp --mode $KCPTUN_MODE --dscp $KCPTUN_DSCP

@@ -6,11 +6,11 @@ if [ -d dump ] && [ "$(echo dump/*.pgg)" != "" ]; then
     sks pbuild -cache 20 -ptree_cache 70
 fi
 if [ ! -e sksconf ]; then
-    cp /etc/sks/sksconf .
+    cp /usr/local/etc/sks/sksconf .
 fi
 if [ ! -e membership ]; then
-    cp /etc/sks/membership .
+    cp /usr/local/etc/sks/membership .
 fi
 if [ ! -e web ]; then
-    cp -r /etc/sks/web .
+    cp -r /usr/local/etc/sks/web .
 fi
