@@ -26,4 +26,4 @@ RUN set -ex \
 ADD files /
 VOLUME /var/lib/sks
 EXPOSE 11371 11370
-CMD /start.sh
+CMD ["s6-svscan", "/etc/s6"]
