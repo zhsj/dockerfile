@@ -28,4 +28,4 @@ RUN set -ex \
 ADD files /
 EXPOSE 443 443/udp 444/udp
 
-CMD s6-svscan /etc/s6
+CMD s6-svscan /s6
