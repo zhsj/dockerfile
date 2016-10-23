@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/execlineb -P
 ss-server -s ${SERVER_ADDR:-0.0.0.0} \
           -p ${SERVER_PORT:-443} \
           -k ${PASSWORD:-$(hostname)} \

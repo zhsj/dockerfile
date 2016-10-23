@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/execlineb -P
 s6-svwait /s6/ss
 kcptun-server -l :${KCPTUN_PORT:-444} \
               -t 127.0.0.1:${SERVER_PORT:-443} \
