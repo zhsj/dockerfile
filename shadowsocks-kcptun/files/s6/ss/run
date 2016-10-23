@@ -1,8 +1,13 @@
 #!/bin/execlineb -P
-ss-server -s ${SERVER_ADDR:-0.0.0.0} \
-          -p ${SERVER_PORT:-443} \
-          -k ${PASSWORD:-$(hostname)} \
-          -m ${METHOD:-chacha20} \
-          -t ${TIMEOUT:-300} \
-          -d ${DNS_ADDR:-8.8.8.8} \
-          --fast-open -u -A
+multisubstitute
+{
+  import -D 0.0.0.0 SERVER_ADDR
+  import -D 443 SERVER_PORT
+  import -D foo!bar PASSWORD
+  import -D chacha20 METHOD
+  import -D 300 TIMEOUT
+  import -D 8.8.8.8 DNS_ADDR
+}
+ss-server -s $SERVER_ADDR -p $SERVER_PORT \
+          -k $PASSWORD -m $METHOD -t $TIMEOUT \
+          -d $DNS_ADDR --fast-open -u -A

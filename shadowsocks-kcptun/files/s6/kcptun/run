@@ -1,9 +1,17 @@
 #!/bin/execlineb -P
-s6-svwait /s6/ss
-kcptun-server -l :${KCPTUN_PORT:-444} \
-              -t 127.0.0.1:${SERVER_PORT:-443} \
-              --crypt ${KCPTUN_CRYPT:-none} \
-              --mtu ${KCPTUN_MTU:-1200} \
-              --nocomp \
-              --mode ${KCPTUN_MODE:-normal} \
-              --dscp ${KCPTUN_DSCP:-46}
+multisubstitute
+{
+  import -D 444 KCPTUN_PORT
+  import -D 443 SERVER_PORT
+  import -D none KCPTUN_CRYPT
+  import -D 1200 KCPTUN_MTU
+  import -D normal KCPTUN_MODE
+  import -D 46 KCPTUN_DSCP
+}
+foreground
+{
+  s6-svwait /etc/s6/ss
+}
+kcptun-server -l :$KCPTUN_PORT -t 127.0.0.1:$SERVER_PORT \
+              --crypt $KCPTUN_CRYPT --mtu $KCPTUN_MTU \
+              --nocomp --mode $KCPTUN_MODE --dscp $KCPTUN_DSCP
