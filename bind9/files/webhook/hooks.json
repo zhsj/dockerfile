@@ -1,0 +1,7 @@
+[
+  {
+    "id": "bind",
+    "execute-command": "/etc/bind/hook.sh",
+    "command-working-directory": "/etc/bind"
+  }
+]

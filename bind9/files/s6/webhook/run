@@ -1,0 +1,2 @@
+#! /bin/execlineb -P
+/usr/local/bin/webhook -hooks /etc/webhook/hooks.json -verbose

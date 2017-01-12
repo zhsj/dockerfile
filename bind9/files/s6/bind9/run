@@ -1,0 +1,2 @@
+#! /bin/execlineb -P
+cd /etc/bind /usr/local/bind9/sbin/named -g
