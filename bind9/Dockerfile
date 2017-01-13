@@ -19,7 +19,7 @@ RUN set -ex \
        && go get github.com/adnanh/webhook \
        && strip /gobuild/bin/webhook \
        && install -m 755 /gobuild/bin/webhook /usr/local/bin/webhook \
-       && rm -rf /gobuild \
+       && rm -rf /gobuild /usr/lib/go \
     && apk del --purge .bind9-builddeps \
     && rm -rf /var/cache/apk/* \
     && /usr/local/bind9/sbin/rndc-confgen -a -r /dev/urandom \
