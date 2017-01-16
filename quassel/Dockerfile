@@ -2,7 +2,7 @@ FROM alpine
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>¬
 
 RUN set -ex \
-    && export QT_VER=5.7.0 \
+    && export QT_VER=5.7.1 \
     && export QT_DIST=/usr/local/Qt-"$QT_VER" \
     && export QT_BASE_SRC=https://download.qt.io/official_releases/qt/"${QT_VER%.*}"/"$QT_VER"/submodules/qtbase-opensource-src-"$QT_VER".tar.xz \
     && export QT_BASE_DIR=qtbase-opensource-src-"$QT_VER" \
