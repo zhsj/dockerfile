@@ -1,8 +1,7 @@
-FROM alpine:edge
+FROM alpine
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
 RUN set -ex \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && apk upgrade --update \
     && apk add --virtual .sks-deps db-utils libgcc s6 \
     && apk add --virtual .sks-builddeps \
