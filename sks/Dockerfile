@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:edge
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
 RUN set -ex \
