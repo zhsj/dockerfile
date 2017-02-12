@@ -16,6 +16,7 @@ RUN set -ex \
     && rm -rf bind-$BINDVERSION \
     && mkdir /gobuild \
        && export GOPATH=/gobuild \
+       && git config --global http.https://gopkg.in.followRedirects true \
        && go get github.com/adnanh/webhook \
        && strip /gobuild/bin/webhook \
        && install -m 755 /gobuild/bin/webhook /usr/local/bin/webhook \
