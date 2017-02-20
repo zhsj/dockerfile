@@ -4,11 +4,11 @@ MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 RUN set -ex \
     && export BINDVERSION=9.11.0-P3 \
     && apk upgrade --update \
-    && apk add --virtual .bind9-builddeps build-base bash curl libressl-dev libcap-dev perl linux-headers bsd-compat-headers libxml2-dev go git musl-dev \
-    && apk add --virtual .bind9-deps libxml2 libcap libgcc s6 \
+    && apk add --virtual .bind9-builddeps build-base bash curl libressl-dev libcap-dev perl linux-headers bsd-compat-headers libxml2-dev go git musl-dev libxml2-dev \
+    && apk add --virtual .bind9-deps libxml2 libcap libgcc s6 libxml2 \
     && curl -sSL https://ftp.isc.org/isc/bind9/$BINDVERSION/bind-$BINDVERSION.tar.gz | tar xz \
     && cd bind-$BINDVERSION \
-       && CFLAGS="-O3" ./configure --enable-ipv6  --enable-filter-aaaa --enable-threads --prefix=/usr/local/bind9 --exec-prefix=/usr/local/bind9 \
+       && CFLAGS="-O3" ./configure --enable-ipv6  --enable-filter-aaaa --enable-threads --prefix=/usr/local/bind9 --exec-prefix=/usr/local/bind9 --with-libxml2 \
        && make \
        && make install \
        && bash -c 'rm -rf /usr/local/bind9/{include,lib,share}' \
