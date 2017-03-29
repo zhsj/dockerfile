@@ -31,4 +31,4 @@ CMD ss-server -s ${SERVER_ADDR:-0.0.0.0} \
               -m ${METHOD:-chacha20} \
               -t ${TIMEOUT:-300} \
               -d ${DNS_ADDR:-8.8.8.8} \
-              --fast-open -u -A
+              --fast-open -u
