@@ -13,7 +13,7 @@ RUN set -ex \
         && ./autogen.sh \
         && ./configure --disable-documentation \
         && make \
-        && cc src/ss_server*.o -L../libbloom/.libs/ -Llibcork/.libs/ -Llibipset/.libs/ \
+        && cc src/ss_server*.o -Llibbloom/.libs/ -Llibcork/.libs/ -Llibipset/.libs/ \
            -Wl,-Bstatic -lbloom -lipset -lcork -lcrypto -lsodium -lpcre -lsodium -lev \
            -Wl,-Bdynamic -ludns -o src/ss-server-static \
         && strip src/ss-server-static \
