@@ -14,7 +14,7 @@ RUN set -ex \
         && ./configure --disable-documentation \
         && make \
         && cc src/ss_server*.o -Llibbloom/.libs/ -Llibcork/.libs/ -Llibipset/.libs/ \
-           -Wl,-Bstatic -lbloom -lipset -lcork -lcrypto -lsodium -lpcre -lsodium -lev \
+           -Wl,-Bstatic -lbloom -lipset -lcork -lsodium -lmbedcrypto -lpcre -lev \
            -Wl,-Bdynamic -ludns -o src/ss-server-static \
         && strip src/ss-server-static \
         && install -m755 src/ss-server-static /usr/local/bin/ss-server \
