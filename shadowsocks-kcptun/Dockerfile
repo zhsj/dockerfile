@@ -7,7 +7,7 @@ RUN set -ex \
     && export SS_DIR=shadowsocks-libev \
     && apk upgrade --update \
     && apk add --virtual .ss-builddeps git autoconf automake build-base libtool linux-headers libressl-dev libsodium-dev udns-dev \
-       libev-dev pcre-dev zlib-dev \
+       mbedtls-dev mbedtls-static libev-dev pcre-dev zlib-dev \
        go \
     && apk add --virtual .ss-deps udns \
        s6 \
@@ -16,7 +16,8 @@ RUN set -ex \
         && ./autogen.sh \
         && ./configure --disable-documentation \
         && make \
-        && cc src/ss_server*.o -Llibcork/.libs/ -Llibipset/.libs/ -Wl,-Bstatic -lcrypto -lsodium -lev -lipset -lcork -lpcre \
+        && cc src/ss_server*.o -L../libbloom/.libs/ -Llibcork/.libs/ -Llibipset/.libs/ \
+           -Wl,-Bstatic -lbloom -lipset -lcork -lcrypto -lsodium -lpcre -lsodium -lev \
            -Wl,-Bdynamic -ludns -o src/ss-server-static \
         && strip src/ss-server-static \
         && install -m755 src/ss-server-static /usr/local/bin/ss-server \
