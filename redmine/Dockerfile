@@ -4,7 +4,7 @@ MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
 ENV RAILS_ENV=production
 RUN set -ex \
-    && export REDMINE_VERSION=3.3.2 \
+    && export REDMINE_VERSION=3.3.3 \
     && export GOSU_VERSION=1.10 \
     && export THEME_VERSION=v1.2.2 \
     && export REDMINE_TAR=https://github.com/redmine/redmine/archive/"$REDMINE_VERSION".tar.gz \
