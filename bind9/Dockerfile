@@ -8,10 +8,12 @@ RUN set -ex \
     && apk add --virtual .bind9-deps libxml2 libcap libgcc s6 json-c \
     && curl -sSL https://ftp.isc.org/isc/bind9/$BINDVERSION/bind-$BINDVERSION.tar.gz | tar xz \
     && cd bind-$BINDVERSION \
-       && CFLAGS="-O3" ./configure --enable-ipv6  --enable-filter-aaaa --enable-threads --prefix=/usr/local/bind9 --exec-prefix=/usr/local/bind9 --with-libxml2 --with-libjson \
+       && CFLAGS="-O3" ./configure --enable-ipv6  --enable-filter-aaaa --enable-threads --prefix=/usr/local/bind9 \
+          --exec-prefix=/usr/local/bind9 --with-libxml2 --with-libjson --with-libtool --enable-static=no \
        && make \
        && make install \
-       && bash -c 'rm -rf /usr/local/bind9/{include,lib,share}' \
+       && bash -c 'rm -rf /usr/local/bind9/{include,share}' \
+       && bash -c 'strip /usr/local/bind9/{bin,sbin,lib}/* || exit 0' \
     && cd .. \
     && rm -rf bind-$BINDVERSION \
     && mkdir /gobuild \
