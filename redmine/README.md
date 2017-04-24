@@ -2,7 +2,7 @@
 
 ![](https://images.microbadger.com/badges/image/zhusj/redmine.svg)
 
-Redmine v3.3.1. Database is SQLite3.
+Redmine v3.3. Database is SQLite3.
 
 ## Guide
 
