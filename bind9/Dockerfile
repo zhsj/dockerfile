@@ -19,8 +19,7 @@ RUN set -ex \
     && mkdir /gobuild \
        && export GOPATH=/gobuild \
        && git config --global http.https://gopkg.in.followRedirects true \
-       && go get github.com/adnanh/webhook \
-       && strip /gobuild/bin/webhook \
+       && go get -ldflags="-s -w" github.com/adnanh/webhook \
        && install -m 755 /gobuild/bin/webhook /usr/local/bin/webhook \
        && rm -rf /gobuild /usr/lib/go \
     && apk del --purge .bind9-builddeps \
