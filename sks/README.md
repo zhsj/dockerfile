@@ -5,7 +5,6 @@
 ## Intro
 
 This is [SKS Key Server](https://bitbucket.org/skskeyserver/sks-keyserver) unofficial Dockerfile.
-Currently the latest version is 1.1.6.
 
 ## Guide
 
