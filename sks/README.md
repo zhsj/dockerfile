@@ -5,6 +5,7 @@
 ## Intro
 
 This is [SKS Key Server](https://bitbucket.org/skskeyserver/sks-keyserver) unofficial Dockerfile.
+It's built against latest code from upstream.
 
 ## Guide
 
@@ -25,7 +26,9 @@ docker run --rm -v /srv/docker/sks/:/var/lib/sks/ zhusj/sks sks-init
 The command above will init the working directory for SKS.
 
 Please read the [`sks-init`](https://github.com/zhsj/dockerfile/blob/master/sks/files/bin/sks-init)
-script to check what it does.
+script to check what it does. If you have a key dump directory, this script will import them. Otherwise
+it will build an empty database. It will also copy some sample configuration files if you don't have
+them in `/srv/docker/sks`. You can modify these configurations later.
 
 ### Run
 
@@ -41,3 +44,7 @@ Besides you should setup a reverse proxy server for `127.0.0.1:11371`. And you s
 the membership file in `/srv/docker/sks/membership` to start peering.
 
 Read more at [SKS Wiki](https://bitbucket.org/skskeyserver/sks-keyserver/wiki/Peering).
+
+### Demo
+
+This image is used for running <https://sks.ustclug.org>
