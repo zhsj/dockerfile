@@ -4,6 +4,8 @@ if [ -d dump ] && [ "$(echo dump/*.pgp)" != "dump/*.pgp" ]; then
     sks build dump/*.pgp -n 10 -cache 100
     sks cleandb
     sks pbuild -cache 20 -ptree_cache 70
+else
+    sks build
 fi
 if [ ! -e sksconf ]; then
     cp /usr/local/etc/sks/sksconf .
