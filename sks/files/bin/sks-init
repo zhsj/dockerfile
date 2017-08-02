@@ -1,6 +1,6 @@
 #!/bin/sh
 cd /var/lib/sks || exist 1
-if [ -d dump ] && [ "$(echo dump/*.pgg)" != "" ]; then
+if [ -d dump ] && [ "$(echo dump/*.pgp)" != "dump/*.pgp" ]; then
     sks build dump/*.pgp -n 10 -cache 100
     sks cleandb
     sks pbuild -cache 20 -ptree_cache 70
