@@ -2,7 +2,7 @@ FROM alpine
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
 RUN set -ex \
-    && export BINDVERSION=9.11.2 \
+    && export BINDVERSION=9.12.0a1 \
     && apk upgrade --update \
     && apk add --virtual .bind9-builddeps build-base bash curl libressl-dev libcap-dev perl linux-headers bsd-compat-headers libxml2-dev go git musl-dev json-c-dev \
     && apk add --virtual .bind9-deps libxml2 libcap libgcc s6 json-c \
@@ -10,6 +10,7 @@ RUN set -ex \
     && cd bind-$BINDVERSION \
        && CFLAGS="-O3" ./configure --enable-ipv6  --enable-filter-aaaa --enable-threads --prefix=/usr/local/bind9 \
           --exec-prefix=/usr/local/bind9 --with-libxml2 --with-libjson --with-libtool --enable-static=no \
+          --enable-full-report \
        && make \
        && make install \
        && bash -c 'rm -rf /usr/local/bind9/{include,share}' \
@@ -18,7 +19,6 @@ RUN set -ex \
     && rm -rf bind-$BINDVERSION \
     && mkdir /gobuild \
        && export GOPATH=/gobuild \
-       && git config --global http.https://gopkg.in.followRedirects true \
        && go get -ldflags="-s -w" github.com/adnanh/webhook \
        && install -m 755 /gobuild/bin/webhook /usr/local/bin/webhook \
        && rm -rf /gobuild /usr/lib/go \
