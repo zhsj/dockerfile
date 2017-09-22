@@ -4,7 +4,7 @@ multisubstitute
   import -D 0.0.0.0 SERVER_ADDR
   import -D 443 SERVER_PORT
   import -D foo!bar PASSWORD
-  import -D chacha20 METHOD
+  import -D xchacha20-ietf-poly1305 METHOD
   import -D 300 TIMEOUT
   import -D 8.8.8.8 DNS_ADDR
 }

@@ -6,30 +6,23 @@ RUN set -ex \
     && export KCPTUN_PATH=github.com/xtaci/kcptun/server \
     && export SS_DIR=shadowsocks-libev \
     && apk upgrade --update \
-    && apk add --virtual .ss-builddeps git autoconf automake build-base libtool linux-headers libressl-dev libsodium-dev udns-dev \
+    && apk add --virtual .ss-builddeps git cmake build-base linux-headers libressl-dev libsodium-dev c-ares-dev \
        mbedtls-dev mbedtls-static libev-dev pcre-dev zlib-dev \
        go \
-    && apk add --virtual .ss-deps udns \
-       s6 \
+    && apk add --virtual .ss-deps s6 \
     && git clone --recursive $SS_GIT $SS_DIR \
-    && cd $SS_DIR \
-        && ./autogen.sh \
-        && ./configure --disable-documentation \
+    && cd $SS_DIR/build \
+        && cmake -DWITH_STATIC=ON -DWITH_DOC_MAN=OFF -DWITH_DOC_HTML=OFF -DCMAKE_BUILD_TYPE=Release .. \
         && make \
-        && cc src/ss_server*.o -Llibbloom/.libs/ -Llibcork/.libs/ -Llibipset/.libs/ \
-           -Wl,-Bstatic -lbloom -lipset -lcork -lsodium -lmbedcrypto -lpcre -lev \
-           -Wl,-Bdynamic -ludns -o src/ss-server-static \
-        && strip src/ss-server-static \
-        && install -m755 src/ss-server-static /usr/local/bin/ss-server \
-        && cd .. \
+        && strip bin/ss-server \
+        && install -m755 bin/ss-server /usr/local/bin/ss-server \
+        && cd ../.. \
         && rm -rf $SS_DIR \
-    && mkdir /go \
-        && export GOPATH=/go \
-        && go get $KCPTUN_PATH \
-        && strip /go/bin/server \
-        && install -m755 /go/bin/server /usr/local/bin/kcptun-server \
-        && rm -rf /go \
-        && rm -rf /usr/lib/go/pkg \
+    && mkdir /gobuild \
+        && export GOPATH=/gobuild \
+        && go get -ldflags="-s -w" $KCPTUN_PATH \
+        && install -m755 /gobuild/bin/server /usr/local/bin/kcptun-server \
+        && rm -rf /gobuild /usr/lib/go/pkg \
     && apk del --purge .ss-builddeps \
     && rm -rf /var/cache/apk/*
 
