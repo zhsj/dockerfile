@@ -2,7 +2,7 @@ FROM alpine
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>¬
 
 RUN set -ex \
-    && export QT_VER=5.7.1 \
+    && export QT_VER=5.9.2 \
     && export QT_DIST=/usr/local/Qt-"$QT_VER" \
     && export QT_BASE_SRC=https://download.qt.io/official_releases/qt/"${QT_VER%.*}"/"$QT_VER"/submodules/qtbase-opensource-src-"$QT_VER".tar.xz \
     && export QT_BASE_DIR=qtbase-opensource-src-"$QT_VER" \
@@ -14,10 +14,9 @@ RUN set -ex \
     && apk add --virtual .qs-builddeps bash build-base openssl-dev linux-headers curl git cmake \
     && curl -sSL $QT_BASE_SRC | tar xJ \
     && cd $QT_BASE_DIR \
-      && bash ./configure -opensource -confirm-license -static -no-accessibility -qt-sql-sqlite -no-qml-debug \
-        -no-gif -no-libpng -no-libjpeg -qt-doubleconversion -no-freetype -no-harfbuzz -openssl-linked -qt-pcre \
-        -no-xkbcommon-evdev -no-xinput2 -no-xcb-xlib -no-glib -no-pulseaudio -no-alsa -no-gtk -no-compile-examples \
-        -no-gui -no-dbus -nomake tools -nomake examples \
+      && bash ./configure -opensource -confirm-license -static -qt-sqlite -sql-sqlite \
+         -no-accessibility -no-qml-debug -no-gui -no-widgets -no-dbus \
+         -no-compile-examples -nomake tools -nomake examples \
       && make install \
       && cd .. \
     && curl -sSL $QT_SCRIPT_SRC | tar xJ \
@@ -28,7 +27,7 @@ RUN set -ex \
     && git clone $QS_GIT $QS_DIR \
     && cd $QS_DIR \
         && mkdir staticlibs \
-        && cp $QT_DIST/lib/libqtpcre.a staticlibs \
+        && cp $QT_DIST/lib/libqtpcre2.a staticlibs/libqtpcre.a \
         && cmake . -DWANT_CORE=ON -DWANT_QTCLIENT=OFF -DWANT_MONO=OFF \
            -DUSE_QT5=ON -DWITH_KDE=OFF -DWITH_OXYGEN=OFF -DWITH_WEBKIT=OFF \
            -DHAVE_SSL=ON -DCMAKE_BUILD_TYPE=Release -DSTATIC=ON -DCMAKE_PREFIX_PATH=$QT_DIST \
