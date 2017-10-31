@@ -5,11 +5,6 @@ case "$1" in
     rails|rake)
         if [ ! -f './config/configuration.yml' ]; then
             if [ "$EMAIL_USER" ]; then
-                username="${EMAIL_USER}"
-                password="${EMAIL_PASSWORD}"
-                domain="${EMAIL_DOMAIN}"
-                smtp="${EMAIL_SMTP}"
-
                 cat > './config/configuration.yml' <<-YML
 					$RAILS_ENV:
 					  email_delivery:
