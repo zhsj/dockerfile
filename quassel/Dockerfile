@@ -27,11 +27,12 @@ RUN set -ex \
     && git clone $QS_GIT $QS_DIR \
     && cd $QS_DIR \
         && mkdir staticlibs \
-        && cp $QT_DIST/lib/libqtpcre2.a staticlibs/libqtpcre.a \
+        && cp $QT_DIST/plugins/sqldrivers/libqsqlite.a staticlibs/ \
+        && cp $QT_DIST/lib/libqtpcre2.a staticlibs/ \
         && cmake . -DWANT_CORE=ON -DWANT_QTCLIENT=OFF -DWANT_MONO=OFF \
            -DUSE_QT5=ON -DWITH_KDE=OFF -DWITH_OXYGEN=OFF -DWITH_WEBKIT=OFF \
            -DHAVE_SSL=ON -DCMAKE_BUILD_TYPE=Release -DSTATIC=ON -DCMAKE_PREFIX_PATH=$QT_DIST \
-           -DLINK_EXTRA=qtpcre \
+           -DLINK_EXTRA=qsqlite;qtpcre2 \
         && make \
         && strip quasselcore \
         && install -m755 quasselcore /usr/local/bin \
