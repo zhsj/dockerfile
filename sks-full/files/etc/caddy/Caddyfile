@@ -1,4 +1,4 @@
-http://sks.example.com:11371, http://sks.example.com, https://sks.example.com {
+http://sks.example.org:11371, http://sks.example.org, https://sks.example.org {
   bind 127.0.0.2
   root /var/lib/sks/web/
   proxy /pks/ http://127.0.0.1:11371/ {
