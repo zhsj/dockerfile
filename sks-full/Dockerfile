@@ -6,11 +6,11 @@ RUN set -ex \
     && apk add --virtual .sks-deps db-utils libgcc gmp s6 ca-certificates \
     && apk add --virtual .sks-builddeps \
         build-base opam curl git go db-dev patch m4 perl gmp-dev zlib-dev \
-    && curl -sSL https://bitbucket.org/skskeyserver/sks-keyserver/get/default.tar.gz | tar xz \
-    && mv skskeyserver* sks-keyserver \
     && opam init --no-setup -y \
     && opam install -y cryptokit \
     && export PATH=~/.opam/system/bin/:$PATH \
+    && curl -sSL https://bitbucket.org/skskeyserver/sks-keyserver/get/default.tar.gz | tar xz \
+    && mv skskeyserver* sks-keyserver \
     && cd sks-keyserver \
         && sed 's/db-.*/db-5.3/' Makefile.local.unused > Makefile.local \
         && sed -i '/warn-error/d' Makefile \
