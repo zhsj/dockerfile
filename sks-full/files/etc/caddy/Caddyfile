@@ -1,0 +1,6 @@
+http://sks.example.com:11371, http://sks.example.com, https://sks.example.com {
+  bind 127.0.0.2
+  root /var/lib/sks/web/
+  proxy pks/ http://127.0.0.1:11371/
+  tls webmaster@example.com
+}

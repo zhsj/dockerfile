@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SKS OpenPGP Key Server</title>
+    <link rel="stylesheet" href="https://unpkg.com/material-design-lite/material.min.css">
+    <script src="https://unpkg.com/material-design-lite/material.min.js"></script>
+    <style>
+.page-content {
+}
+.mdl-layout__tab-panel {
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 600px;
+}
+.md-card {
+  margin: 20px auto;
+  padding: 20px;
+}
+    </style>
+  </head>
+  <body>
+    <!-- Simple header with fixed tabs. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">SKS OpenPGP Key Server</span>
+        </div>
+        <!-- Tabs -->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+          <a href="#search" class="mdl-layout__tab is-active">Search</a>
+          <a href="#submit" class="mdl-layout__tab">Submit</a>
+          <a href="#faq" class="mdl-layout__tab">FAQ</a>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+      <section class="mdl-layout__tab-panel is-active" id="search">
+        <div class="page-content md-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Extract a key</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            You can find a key by typing in some words that appear in the userid (name,
+            email, etc.) of the key you're looking for, or by typing in the keyid in hex format
+            ("0x…")
+          </div>
+          <div class="mdl-card__actions">
+            <!-- Simple Textfield -->
+            <form action="/pks/lookup" method="get">
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" id="search-str" name="search">
+                <label class="mdl-textfield__label" for="search-str">0xABCDEFGH</label>
+              </div>
+              <p>
+              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="search-fingerprint">
+                <input type="checkbox" id="search-fingerprint" class="mdl-switch__input" name="fingerprint">
+                <span class="mdl-switch__label">Show PGP Fingerprints</span>
+              </label>
+              <p>
+              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="search-hash">
+                <input type="checkbox" id="search-hash" class="mdl-switch__input" name="hash">
+                <span class="mdl-switch__label">Show SKS full-key hashes</span>
+              </label>
+              <p>
+              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="search-exact">
+                <input type="checkbox" id="search-exact" class="mdl-switch__input" name="exact">
+                <span class="mdl-switch__label">Only return exact matches</span>
+              </label>
+              <p>
+              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="search-options">
+                <input type="checkbox" id="search-options" class="mdl-switch__input" name="options" value="mr">
+                <span class="mdl-switch__label">Machine readable</span>
+              </label>
+              <p>
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="search-index">
+                <input type="radio" id="search-index" class="mdl-radio__button" name="op" value="index">
+                <span class="mdl-radio__label">Get regular index of matching keys</span>
+              </label>
+              <p>
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="search-vindex">
+                <input type="radio" id="search-vindex" class="mdl-radio__button" name="op" value="vindex" checked>
+                <span class="mdl-radio__label">Get verbose index of matching keys</span>
+              </label>
+              <p>
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="search-get">
+                <input type="radio" id="search-get" class="mdl-radio__button" name="op" value="get">
+                <span class="mdl-radio__label">Retrieve ascii-armored keys</span>
+              </label>
+              <p>
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="search-hget">
+                <input type="radio" id="search-hget" class="mdl-radio__button" name="op" value="hget">
+                <span class="mdl-radio__label">Retrieve keys by full-key hash</span>
+              </label>
+              <p>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Search</button>
+            </form>
+          </div>
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="submit">
+        <div class="page-content md-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Submit a key</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            You can submit a key by simply pasting in the ASCII-armored version of your key and clicking on submit.
+          </div>
+          <div class="mdl-card__actions">
+            <!-- Simple Textfield -->
+            <form action="/pks/add" method="post">
+              <!-- Floating Multiline Textfield -->
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
+                <textarea class="mdl-textfield__input" type="text" rows= "5" id="submit-text" name="keytext"></textarea>
+              </div>
+              <p>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
+            </form>
+          </div>
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="faq">
+        <div class="page-content md-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Contact</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            <p>For operational issues, please contact 0xABCDEFGH.
+          </div>
+        </div>
+      </section>
+      <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+          <ul class="mdl-mini-footer__link-list">
+            <li><a href="http://openpgp.org/">OpenPGP</a></li>
+            <li><a href="https://bitbucket.org/skskeyserver/sks-keyserver">SKS</a></li>
+            <li><a href="https://sks-keyservers.net/">Key Server Pool</a></li>
+            <li><a href="/pks/lookup?op=stats">Server Stats</a></li>
+          </ul>
+        </div>
+      </footer>
+      </main>
+    </div>
+  </body>
+</html>
+<!--
+  vim:ai:et:sta:ts=2:sts=2:sw=2
+-->

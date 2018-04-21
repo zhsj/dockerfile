@@ -1,0 +1,12 @@
+#!/bin/sh
+cd /var/lib/sks/KDB/ || exit 1
+for i in $(ls -1 | grep -Ev "^(__|log\.|DB_CONFIG$)" || true)
+do
+    db_upgrade "$i"
+done
+
+cd /var/lib/sks/PTree || exit 1
+for i in $(ls -1 | grep -Ev "^(__|log\.|DB_CONFIG$)" || true)
+do
+    db_upgrade "$i"
+done

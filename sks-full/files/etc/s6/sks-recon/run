@@ -1,0 +1,6 @@
+#!/bin/execlineb -P
+foreground
+{
+  s6-svwait /usr/local/etc/s6/sks-db
+}
+sks -stdoutlog -basedir /var/lib/sks recon
