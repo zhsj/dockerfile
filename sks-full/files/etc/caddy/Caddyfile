@@ -1,6 +1,9 @@
 http://sks.example.com:11371, http://sks.example.com, https://sks.example.com {
   bind 127.0.0.2
   root /var/lib/sks/web/
-  proxy pks/ http://127.0.0.1:11371/
-  tls webmaster@example.com
+  proxy /pks/ http://127.0.0.1:11371/ {
+    header_downstream Via "{proto} {hostonly}:11371 (Caddy)"
+  }
+  # change self_signed to email address to get certification from Let's Encrypt
+  tls self_signed
 }
