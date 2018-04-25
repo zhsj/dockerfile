@@ -45,10 +45,6 @@ the membership file in `/srv/docker/sks/membership` to start peering.
 
 Read more at [SKS Wiki](https://bitbucket.org/skskeyserver/sks-keyserver/wiki/Peering).
 
-### Demo
-
-This image is used for running <https://sks.ustclug.org>
-
 ### Full version
 
 `zhusj/sks:full` bundles [Caddy](https://github.com/mholt/caddy). So you don't need to setup reverse
@@ -64,4 +60,8 @@ docker run -it -d --restart=always --name sks-keyserver \
 
 This version exposes hkp(80,11371), hkps(443) and recon(11370) ports.
 
-You need to edit `/var/lib/sks/caddy/Caddyfile` to set your hostname and email.
+You need to edit `/srv/docker/sks/caddy/Caddyfile` to set your hostname and email.
+
+### Demo
+
+The full version is used for running <https://pgp.ustc.edu.cn>
