@@ -4,17 +4,15 @@ MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
 
 ENV RAILS_ENV=production
 RUN set -ex \
-    && export GOSU_VERSION=1.10 \
-    && export THEME_VERSION=1.3.4 \
-    && export REDMINE_TAR=https://github.com/redmine/redmine/archive/master.tar.gz \
-    && export THEME_ZIP=https://github.com/akabekobeko/redmine-theme-minimalflat2/releases/download/v"$THEME_VERSION"/minimalflat2-"$THEME_VERSION".zip \
-    && export GOSU_BIN=https://github.com/tianon/gosu/releases/download/"$GOSU_VERSION"/gosu-amd64 \
     && export BUNDLE_SILENCE_ROOT_WARNING=1 \
     && cd / \
     && apk --update add --virtual .redmine-deps \
          ruby ruby-bundler ruby-bigdecimal ruby-json sqlite-libs tzdata git \
     && apk add --virtual .redmine-builddpes \
          curl build-base ruby-dev sqlite-dev zlib-dev \
+    && export REDMINE_TAR=https://github.com/redmine/redmine/archive/master.tar.gz \
+    && export THEME_ZIP=$(curl --silent https://api.github.com/repos/akabekobeko/redmine-theme-minimalflat2/releases/latest | grep browser_download_url | sed -E 's/.*"([^\"]+)".*/\1/') \
+    && export GOSU_BIN=$(curl --silent https://api.github.com/repos/tianon/gosu/releases/latest | grep '/gosu-amd64\"' | sed -E 's/.*"([^\"]+)".*/\1/') \
     && curl -sSL $GOSU_BIN -o /usr/local/bin/gosu \
     && chmod +x /usr/local/bin/gosu \
     && curl -sSL $REDMINE_TAR | tar xz \
