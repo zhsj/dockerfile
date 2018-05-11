@@ -27,8 +27,9 @@ RUN set -ex \
         && cd $GOPATH/src/github.com/mholt/caddy \
         && CADDY_TAG=$(git describe --tags `git rev-list --tags --max-count=1`) \
         && git checkout $CADDY_TAG \
+        && git config --global user.email "user@example.com" \
+        && curl -sSL https://github.com/mholt/caddy/pull/2128.patch | git am \
         && sed -i 's|const enableTelemetry = true|const enableTelemetry = false|g' caddy/caddymain/run.go \
-        && git pull origin pull/2128/head \
         && go install -ldflags="-s -w -X github.com/mholt/caddy/caddy/caddymain.gitTag=$CADDY_TAG" github.com/mholt/caddy/caddy \
         && install -m755 $GOPATH/bin/caddy /usr/bin/caddy \
         && cd \
