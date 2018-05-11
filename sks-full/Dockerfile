@@ -24,7 +24,6 @@ RUN set -ex \
     && mkdir /gobuild \
         && export GOPATH=/gobuild \
         && go get -d github.com/mholt/caddy \
-        && go get -d github.com/caddyserver/builds \
         && cd $GOPATH/src/github.com/mholt/caddy \
         && CADDY_TAG=$(git describe --tags `git rev-list --tags --max-count=1`) \
         && git checkout $CADDY_TAG \
