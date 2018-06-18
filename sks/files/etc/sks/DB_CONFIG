@@ -1,1 +1,1 @@
-set_flag DB_LOG_AUTOREMOVE
+set_flags DB_LOG_AUTOREMOVE
