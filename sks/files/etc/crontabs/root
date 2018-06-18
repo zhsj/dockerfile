@@ -1,4 +1,2 @@
 # min hour day month weekday command
 5     *    *   *     *       pkill -USR2 sks
-15    0    *   *     6       db_archive -d -h /var/lib/sks/KDB
-15    0    *   *     6       db_archive -d -h /var/lib/sks/PTree
