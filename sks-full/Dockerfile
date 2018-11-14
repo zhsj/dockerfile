@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine
 MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
@@ -10,8 +10,9 @@ RUN set -ex \
         opam \
         git go \
     && opam init --auto-setup -y \
+    && opam switch 4.04.2 \
     && eval `opam config env` \
-    && opam install -y cryptokit num \
+    && opam install -y cryptokit num camlp4 \
     && curl -sSL https://bitbucket.org/skskeyserver/sks-keyserver/get/default.tar.gz | tar xz \
     && mv skskeyserver* sks-keyserver \
     && cd sks-keyserver \
