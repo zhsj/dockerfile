@@ -27,14 +27,14 @@ RUN set -ex \
     && rm -rf ~/.opam \
     && rm ~/.ocamlinit \
     && mkdir /gobuild \
+        && export CADDY_TAG=v0.11.1 \
         && export GOPATH=/gobuild \
         && go get -d github.com/mholt/caddy \
         && cd $GOPATH/src/github.com/mholt/caddy \
-        && CADDY_TAG=$(git describe --tags `git rev-list --tags --max-count=1`) \
         && git checkout $CADDY_TAG \
         && git config --global user.email "user@example.com" \
         && curl -sSL https://github.com/mholt/caddy/pull/2128.patch | git am \
-        && sed -i 's|const enableTelemetry = true|const enableTelemetry = false|g' caddy/caddymain/run.go \
+        && sed -i 's|var EnableTelemetry = true|var EnableTelemetry = false|g' caddy/caddymain/run.go \
         && go install -ldflags="-s -w -X github.com/mholt/caddy/caddy/caddymain.gitTag=$CADDY_TAG" github.com/mholt/caddy/caddy \
         && install -m755 $GOPATH/bin/caddy /usr/bin/caddy \
         && cd \
