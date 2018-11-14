@@ -42,6 +42,7 @@ RUN set -ex \
         && rm -rf /gobuild \
     && apk --purge del .sks-builddeps \
     && rm -rf /var/cache/apk/* \
+    && rm -rf ~/.cache/ ~/.gitconfig ~/.profile \
     && mkdir -p /var/lib/sks
 
 ADD files /usr/local/
