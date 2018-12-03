@@ -23,6 +23,7 @@ RUN set -ex \
         && echo "  adapter: sqlite3" >> config/database.yml \
         && echo "  database: files/redmine.sqlite3" >> config/database.yml \
         && grep puma Gemfile | head -n1 | sed  's/^ \+//g' >> Gemfile \
+        && echo 'config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))' > config/docker_environment.rb \
         && bundle install --without development test rmagick \
         && cd public/themes/ \
             && curl -sSL $THEME_ZIP -o minimalflat2.zip \
