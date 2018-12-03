@@ -7,7 +7,7 @@ RUN set -ex \
     && export BUNDLE_SILENCE_ROOT_WARNING=1 \
     && cd / \
     && apk --update add --virtual .redmine-deps \
-         ruby ruby-bundler ruby-bigdecimal ruby-json sqlite-libs tzdata git \
+         ruby ruby-bundler ruby-bigdecimal ruby-json sqlite-libs tzdata \
     && apk add --virtual .redmine-builddpes \
          curl build-base ruby-dev sqlite-dev zlib-dev \
     && export REDMINE_TAR=https://github.com/redmine/redmine/archive/master.tar.gz \
@@ -16,17 +16,18 @@ RUN set -ex \
     && curl -sSL $GOSU_BIN -o /usr/local/bin/gosu \
     && chmod +x /usr/local/bin/gosu \
     && curl -sSL $REDMINE_TAR | tar xz \
-    && mv redmine-master redmine \
+    && mv redmine-* redmine \
     && cd /redmine \
-    && rm files/delete.me log/delete.me \
-    && echo "$RAILS_ENV:" > config/database.yml \
-    && echo "  adapter: sqlite3" >> config/database.yml \
-    && echo "  database: files/redmine.sqlite3" >> config/database.yml \
-    && bundle install --without development test rmagick \
-    && cd public/themes/ \
-        && curl -sSL $THEME_ZIP -o minimalflat2.zip \
-        && unzip minimalflat2.zip \
-        && rm minimalflat2.zip \
+        && rm files/delete.me log/delete.me \
+        && echo "$RAILS_ENV:" > config/database.yml \
+        && echo "  adapter: sqlite3" >> config/database.yml \
+        && echo "  database: files/redmine.sqlite3" >> config/database.yml \
+        && grep puma Gemfile | head -n1 | sed  's/^ \+//g' >> Gemfile \
+        && bundle install --without development test rmagick \
+        && cd public/themes/ \
+            && curl -sSL $THEME_ZIP -o minimalflat2.zip \
+            && unzip minimalflat2.zip \
+            && rm minimalflat2.zip \
     && rm -rf ~/.bundle/ \
     && rm -rf /usr/lib/ruby/gems/*/cache/* \
     && apk --purge del .redmine-builddpes \
@@ -36,7 +37,7 @@ RUN set -ex \
 
 WORKDIR /redmine
 
-VOLUME ["/redmine/files", "/gitrepo"]
+VOLUME ["/redmine/files"]
 
 COPY entrypoint.sh /usr/local/bin/
 
