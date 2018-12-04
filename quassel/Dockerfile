@@ -2,7 +2,7 @@ FROM alpine
 MAINTAINER Shengjing Zhu <zsj950618@gmail.com>¬
 
 RUN set -ex \
-    && export QT_VER=5.9.5 \
+    && export QT_VER=5.9.7 \
     && export QT_DIST=/usr/local/Qt-"$QT_VER" \
     && export QT_BASE_SRC=https://download.qt.io/official_releases/qt/"${QT_VER%.*}"/"$QT_VER"/submodules/qtbase-opensource-src-"$QT_VER".tar.xz \
     && export QT_BASE_DIR=qtbase-opensource-src-"$QT_VER" \
@@ -11,11 +11,11 @@ RUN set -ex \
     && export QS_GIT=https://github.com/quassel/quassel.git \
     && export QS_DIR=quassel \
     && apk add --update --virtual .qs-deps libgcc libstdc++ \
-    && apk add --virtual .qs-builddeps bash build-base openssl-dev linux-headers curl git cmake \
+    && apk add --virtual .qs-builddeps bash build-base openssl-dev boost-dev linux-headers curl git cmake \
     && curl -sSL $QT_BASE_SRC | tar xJ \
     && cd $QT_BASE_DIR \
       && bash ./configure -opensource -confirm-license -static -qt-sqlite -sql-sqlite \
-         -no-accessibility -no-qml-debug -no-gui -no-widgets -no-dbus \
+         -no-accessibility -no-gui -no-widgets -no-dbus \
          -no-compile-examples -nomake tools -nomake examples \
       && make install \
       && cd .. \
@@ -26,17 +26,14 @@ RUN set -ex \
       && cd .. \
     && git clone $QS_GIT $QS_DIR \
     && cd $QS_DIR \
-        && mkdir staticlibs \
-        && cp $QT_DIST/plugins/sqldrivers/libqsqlite.a staticlibs/ \
-        && cp $QT_DIST/lib/libqtpcre2.a staticlibs/ \
-        && sed -i '1i#include <QtCore/QtPlugin>\nQ_IMPORT_PLUGIN(QSQLiteDriverPlugin)' src/common/main.cpp \
-        && cmake . -DWANT_CORE=ON -DWANT_QTCLIENT=OFF -DWANT_MONO=OFF \
-           -DUSE_QT5=ON -DWITH_KDE=OFF -DWITH_OXYGEN=OFF -DWITH_WEBKIT=OFF \
-           -DHAVE_SSL=ON -DCMAKE_BUILD_TYPE=Release -DSTATIC=ON -DCMAKE_PREFIX_PATH=$QT_DIST \
-           -DLINK_EXTRA='qsqlite,qtpcre2' \
+        && sed -i '1i#include <QtCore/QtPlugin>\nQ_IMPORT_PLUGIN(QSQLiteDriverPlugin)' src/main/main.cpp \
+        && sed -i "s|Quassel::Core)|Quassel::Core $QT_DIST/plugins/sqldrivers/libqsqlite.a)|g" src/main/CMakeLists.txt \
+        && echo 'target_link_libraries(${TARGET} PUBLIC '"$QT_DIST"'/lib/libqtpcre2.a)' >> src/common/CMakeLists.txt \
+        && cmake . -DCMAKE_VERBOSE_MAKEFILE=ON -DWANT_CORE=ON -DWANT_QTCLIENT=OFF -DWANT_MONO=OFF \
+           -DWITH_KDE=OFF -DWITH_OXYGEN=OFF -DWITH_BUNDLED_ICONS=OFF -DWITH_WEBKIT=OFF -DWITH_WEBENGINE=OFF \
+           -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$QT_DIST \
         && make \
-        && strip quasselcore \
-        && install -m755 quasselcore /usr/local/bin \
+        && make install/strip \
         && cd .. \
     && rm -rf $QS_DIR $QT_BASE_DIR $QT_SCRIPT_DIR $QT_DIST \
     && apk del --purge .qs-builddeps \
