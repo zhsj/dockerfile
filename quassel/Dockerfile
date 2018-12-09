@@ -41,5 +41,5 @@ RUN set -ex \
     && mkdir /var/lib/quassel
 
 VOLUME ["/var/lib/quassel"]
-ENTRYPOINT ["quasselcore", "--configdir=/var/lib/quassel/"]
+CMD ["quasselcore", "--configdir=/var/lib/quassel/"]
 EXPOSE 4242
