@@ -4,12 +4,11 @@
 
 ## Intro
 
-This only contains Quassel server part binary. It is statically linked with
-Qt library and run in Alpine Linux.
+This only contains Quassel server part binary.
 
 It only support SQLite3 as its database.
 
-It's always built with latest Quassel, from master branch in git repo.
+It's built with latest Quassel, from master branch in git repo.
 
 ## Guide
 
