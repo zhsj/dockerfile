@@ -1,6 +1,6 @@
 # Fork from serverbee/redmine-alpine
 FROM alpine
-MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
+MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 ENV RAILS_ENV=production
 RUN set -ex \
