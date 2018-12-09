@@ -1,5 +1,5 @@
 FROM alpine
-MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
+MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
     && export SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
@@ -23,6 +23,7 @@ RUN set -ex \
         && go get -ldflags="-s -w" $KCPTUN_PATH \
         && install -m755 /gobuild/bin/server /usr/local/bin/kcptun-server \
         && rm -rf /gobuild /usr/lib/go/pkg \
+    && rm -rf ~/.cache \
     && apk del --purge .ss-builddeps \
     && rm -rf /var/cache/apk/*
 
