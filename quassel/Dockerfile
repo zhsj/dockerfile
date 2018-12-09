@@ -11,7 +11,7 @@ RUN set -ex \
     && export QS_GIT=https://github.com/quassel/quassel.git \
     && export QS_DIR=quassel \
     && apk add --update --virtual .qs-deps libgcc libstdc++ \
-    && apk add --virtual .qs-builddeps bash build-base openssl-dev boost-dev linux-headers curl git cmake perl \
+    && apk add --virtual .qs-builddeps bash build-base libressl-dev boost-dev linux-headers curl git cmake perl \
     && curl -sSL $QT_BASE_SRC | tar xJ \
     && cd $QT_BASE_DIR \
       && bash ./configure -opensource -confirm-license -shared -qt-sqlite -sql-sqlite \
@@ -35,6 +35,7 @@ RUN set -ex \
         && make install/strip \
         && cd .. \
     && rm -rf $QS_DIR $QT_BASE_DIR $QT_SCRIPT_DIR \
+    && rm -rf /usr/local/lib64/*.so \
     && cd $QT_DIST \
        && rm -rf bin doc include mkspecs plugins/bearer \
        && rm -rf lib/cmake lib/pkgconfig lib/*.a lib/*.la lib/*.prl \
