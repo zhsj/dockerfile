@@ -20,6 +20,17 @@ case "$1" in
 					YML
             fi
         fi
+        if [ ! -f './config/database.yml' ]; then
+            cat > './config/database.yml' <<-YML
+				$RAILS_ENV:
+				  adapter: mysql2
+				  database: "${DB_NAME:-redmine}"
+				  host: "${DB_HOST:-mysql}"
+				  username: "${DB_USER:-redmine}"
+				  password: "$DB_PASSWORD"
+				  encoding: utf8
+				YML
+        fi
 
         if [ ! -f ./config/initializers/secret_token.rb ]; then
             rake generate_secret_token
