@@ -7,9 +7,9 @@ RUN set -ex \
     && export REDMINE_VER=4.0.0 \
     && cd / \
     && apk --update add --virtual .redmine-deps \
-         ruby ruby-bundler ruby-bigdecimal ruby-json sqlite-libs tzdata \
+         ruby ruby-bundler ruby-bigdecimal ruby-json sqlite-libs tzdata mariadb-connector-c \
     && apk add --virtual .redmine-builddpes \
-         curl build-base ruby-dev sqlite-dev zlib-dev \
+         curl build-base ruby-dev sqlite-dev zlib-dev mariadb-connector-c-dev \
     && export REDMINE_TAR=https://www.redmine.org/releases/redmine-"$REDMINE_VER".tar.gz \
     && export THEME_ZIP=$(curl --silent https://api.github.com/repos/akabekobeko/redmine-theme-minimalflat2/releases/latest | grep browser_download_url | sed -E 's/.*"([^\"]+)".*/\1/') \
     && export GOSU_BIN=$(curl --silent https://api.github.com/repos/tianon/gosu/releases/latest | grep '/gosu-amd64\"' | sed -E 's/.*"([^\"]+)".*/\1/') \
