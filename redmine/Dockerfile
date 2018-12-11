@@ -21,6 +21,8 @@ RUN set -ex \
         && echo "$RAILS_ENV:" > config/database.yml \
         && echo "  adapter: sqlite3" >> config/database.yml \
         && echo "  database: files/redmine.sqlite3" >> config/database.yml \
+        && sed -i '/puma/d' Gemfile \
+            && echo 'https://www.redmine.org/issues/30074' \
         && echo "gem 'puma'" >> Gemfile.local \
         && echo 'config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))' > config/additional_environment.rb \
         && bundle install --without development test rmagick \
