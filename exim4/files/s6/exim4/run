@@ -1,0 +1,40 @@
+#!/bin/sh
+set -ex
+
+if [ -z "$SMTP_HOST" ] || [ -z "$SMTP_USER" ] || [ -z "$SMTP_PASSWORD" ]; then
+    echo "Please set SMTP_HOST, SMTP_USER and SMTP_PASSWORD environment"
+    exit 1
+fi
+
+cat > /etc/exim4/update-exim4.conf.conf << EOF
+dc_eximconfig_configtype='satellite'
+dc_other_hostnames=''
+dc_local_interfaces='0.0.0.0'
+dc_readhost='$(hostname)'
+dc_relay_domains=''
+dc_minimaldns='false'
+dc_relay_nets='0.0.0.0/0'
+dc_smarthost='$SMTP_HOST'
+CFILEMODE='644'
+dc_use_split_config='true'
+dc_hide_mailname='true'
+dc_mailname_in_oh='true'
+dc_localdelivery='mail_spool'
+IGNORE_SMTP_LINE_LENGTH_LIMIT='true'
+EOF
+
+echo "*:$SMTP_USER:$SMTP_PASSWORD" > /etc/exim4/passwd.client
+
+sed -i '/protocol=smtps/d' /etc/exim4/conf.d/transport/30_exim4-config_remote_smtp_smarthost
+if echo "$SMTP_HOST"|grep -q 465; then
+    echo protocol = smtps >> /etc/exim4/conf.d/transport/30_exim4-config_remote_smtp_smarthost
+fi
+
+mkdir -p /data/spool/ /data/log
+chown -R Debian-exim:Debian-exim /data/spool/ /data/log
+ln -sfn /data/spool /var/spool/exim4
+ln -sfn /data/log /var/log/exim4
+
+update-exim4.conf -v
+
+exec exim4 -bd -q10m -v
