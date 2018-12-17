@@ -25,9 +25,9 @@ EOF
 
 echo "*:$SMTP_USER:$SMTP_PASSWORD" > /etc/exim4/passwd.client
 
-sed -i '/protocol=smtps/d' /etc/exim4/conf.d/transport/30_exim4-config_remote_smtp_smarthost
+sed -i '/protocol = smtps/d' /etc/exim4/conf.d/transport/30_exim4-config_remote_smtp_smarthost
 if echo "$SMTP_HOST"|grep -q 465; then
-    echo protocol = smtps >> /etc/exim4/conf.d/transport/30_exim4-config_remote_smtp_smarthost
+    echo 'protocol = smtps' >> /etc/exim4/conf.d/transport/30_exim4-config_remote_smtp_smarthost
 fi
 
 mkdir -p /data/spool/ /data/log
