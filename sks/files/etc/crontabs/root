@@ -1,4 +1,4 @@
 # min hour day month weekday command
-5     *    *   *     *       pkill -USR2 sks
+5     *    *   *     *       s6-svc -2 /usr/local/etc/s6/sks-db
 15    *    *   *     *       pgrep db_archive || db_archive -d -h /var/lib/sks/KDB
 45    *    *   *     *       pgrep db_archive || db_archive -d -h /var/lib/sks/PTree
