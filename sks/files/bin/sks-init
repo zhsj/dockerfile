@@ -18,6 +18,7 @@ if [ ! -e KDB/DB_CONFIG ]; then
     cp /usr/local/etc/sks/DB_CONFIG KDB/
 fi
 if [ ! -e PTree/DB_CONFIG ]; then
+    mkdir -p PTree/
     cp /usr/local/etc/sks/DB_CONFIG PTree/
 fi
 
