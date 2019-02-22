@@ -4,6 +4,9 @@
 
 Redmine master branch. Database is SQLite3.
 
+It's forked from [serverbee/docker-redmine-alpine](https://github.com/serverbee/docker-redmine-alpine),
+and files inside this directory are licensed under GPL-2.0.
+
 ## Guide
 
 Sample command to run:
