@@ -10,7 +10,7 @@ RUN set -ex \
     && export QT_SCRIPT_DIR=qtscript-everywhere-src-"$QT_VER" \
     && export QS_GIT=https://github.com/quassel/quassel.git \
     && export QS_DIR=quassel \
-    && apk add --update --virtual .qs-deps libgcc libssl1.0 libstdc++ \
+    && apk add --update --virtual .qs-deps libgcc libssl1.1 libstdc++ \
     && apk add --virtual .qs-builddeps bash boost-dev build-base cmake curl git linux-headers openssl-dev perl \
     && curl -sSL $QT_BASE_SRC | tar xJ \
     && cd $QT_BASE_DIR \
