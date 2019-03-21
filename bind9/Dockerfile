@@ -1,8 +1,8 @@
 FROM alpine
-MAINTAINER Shengjing Zhu <zsj950618@gmail.com>
+MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
-    && export BINDVERSION=9.12.3-P1 \
+    && export BINDVERSION=9.12.4 \
     && apk upgrade --update \
     && apk add --virtual .bind9-builddeps build-base bash curl libressl-dev libcap-dev perl linux-headers bsd-compat-headers libxml2-dev go git musl-dev json-c-dev \
     && apk add --virtual .bind9-deps libxml2 libcap libgcc s6 json-c \
