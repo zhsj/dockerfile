@@ -31,7 +31,7 @@ RUN set -ex \
     && rm -rf /usr/lib/ruby/gems/*/cache/* \
     && apk --purge del .redmine-builddpes \
     && rm -rf /var/cache/apk/* \
-    && adduser -h /redmine -s /sbin/nologin -G redmine -u 1000 -D -H redmine \
+    && adduser -h /redmine -s /sbin/nologin -u 1000 -D -H redmine \
     && chown -R redmine:redmine /redmine
 
 USER 1000:1000
