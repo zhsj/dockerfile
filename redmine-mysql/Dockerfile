@@ -4,7 +4,7 @@ MAINTAINER Shengjing Zhu <i@zhsj.me>
 ENV RAILS_ENV=production
 RUN set -ex \
     && export BUNDLE_SILENCE_ROOT_WARNING=1 \
-    && export REDMINE_VER=4.0.0 \
+    && export REDMINE_VER=4.0.2 \
     && cd / \
     && apk --update add --virtual .redmine-deps \
          ruby ruby-bundler ruby-bigdecimal ruby-json sqlite-libs tzdata mariadb-connector-c \
@@ -12,9 +12,6 @@ RUN set -ex \
          curl build-base ruby-dev sqlite-dev zlib-dev mariadb-connector-c-dev \
     && export REDMINE_TAR=https://www.redmine.org/releases/redmine-"$REDMINE_VER".tar.gz \
     && export THEME_ZIP=$(curl --silent https://api.github.com/repos/akabekobeko/redmine-theme-minimalflat2/releases/latest | grep browser_download_url | sed -E 's/.*"([^\"]+)".*/\1/') \
-    && export GOSU_BIN=$(curl --silent https://api.github.com/repos/tianon/gosu/releases/latest | grep '/gosu-amd64\"' | sed -E 's/.*"([^\"]+)".*/\1/') \
-    && curl -sSL $GOSU_BIN -o /usr/local/bin/gosu \
-    && chmod +x /usr/local/bin/gosu \
     && curl -sSL $REDMINE_TAR | tar xz \
     && mv redmine-* redmine \
     && cd /redmine \
@@ -35,8 +32,10 @@ RUN set -ex \
     && rm -rf /usr/lib/ruby/gems/*/cache/* \
     && apk --purge del .redmine-builddpes \
     && rm -rf /var/cache/apk/* \
-    && adduser -h /redmine -D -H -s /sbin/nologin redmine \
+    && adduser -h /redmine -s /sbin/nologin -G redmine -u 1000 -D -H redmine \
     && chown -R redmine:redmine /redmine
+
+USER 1000:1000
 
 WORKDIR /redmine
 
