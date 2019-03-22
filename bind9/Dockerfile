@@ -4,7 +4,8 @@ MAINTAINER Shengjing Zhu <i@zhsj.me>
 RUN set -ex \
     && export BINDVERSION=9.12.4 \
     && apk upgrade --update \
-    && apk add --virtual .bind9-builddeps build-base bash curl libressl-dev libcap-dev perl linux-headers bsd-compat-headers libxml2-dev go git musl-dev json-c-dev \
+    && apk add --virtual .bind9-builddeps build-base bash curl python3 git go perl \
+       bsd-compat-headers json-c-dev libcap-dev libressl-dev libxml2-dev linux-headers musl-dev \
     && apk add --virtual .bind9-deps libxml2 libcap libgcc s6 json-c \
     && curl -sSL https://ftp.isc.org/isc/bind9/$BINDVERSION/bind-$BINDVERSION.tar.gz | tar xz \
     && cd bind-$BINDVERSION \
