@@ -24,7 +24,6 @@ RUN set -ex \
         && cd .. \
         && rm -rf sks-keyserver \
     && rm -rf ~/.opam \
-    && rm ~/.ocamlinit \
     && apk --purge del .sks-builddeps \
     && rm -rf /var/cache/apk/* \
     && rm -rf ~/.cache/ ~/.gitconfig ~/.profile \

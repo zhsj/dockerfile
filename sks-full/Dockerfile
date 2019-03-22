@@ -26,7 +26,6 @@ RUN set -ex \
         && cd .. \
         && rm -rf sks-keyserver \
     && rm -rf ~/.opam \
-    && rm ~/.ocamlinit \
     && mkdir /gobuild \
         && export CADDY_TAG=v0.11.1 \
         && export GOPATH=/gobuild \
