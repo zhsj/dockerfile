@@ -7,10 +7,11 @@ RUN set -ex \
     && apk add --virtual .bind9-builddeps build-base bash curl python3 git go perl \
        bsd-compat-headers json-c-dev libcap-dev libressl-dev libxml2-dev linux-headers musl-dev \
     && apk add --virtual .bind9-deps libxml2 libcap libgcc s6 json-c \
+    && python3 -m pip install ply \
     && curl -sSL https://ftp.isc.org/isc/bind9/$BINDVERSION/bind-$BINDVERSION.tar.gz | tar xz \
     && cd bind-$BINDVERSION \
-       && CFLAGS="-O3" ./configure --enable-ipv6  --enable-filter-aaaa --enable-threads --prefix=/usr/local/bind9 \
-          --exec-prefix=/usr/local/bind9 --with-libxml2 --with-libjson --with-libtool --enable-static=no \
+       && CFLAGS="-O3" ./configure --prefix=/usr/local/bind9 --exec-prefix=/usr/local/bind9 \
+          --with-libxml2 --with-libjson --with-libtool --enable-static=no \
           --enable-full-report \
        && make \
        && make install \
@@ -24,6 +25,8 @@ RUN set -ex \
        && install -m 755 /gobuild/bin/webhook /usr/local/bin/webhook \
        && rm -rf /gobuild /usr/lib/go \
     && apk del --purge .bind9-builddeps \
+    && rm -rf /usr/lib/python3* \
+    && rm -rf ~/.cache \
     && rm -rf /var/cache/apk/* \
     && /usr/local/bind9/sbin/rndc-confgen -a -r /dev/urandom \
     && echo 'include "/etc/bind/named.conf";' > /usr/local/bind9/etc/named.conf
