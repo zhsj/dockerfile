@@ -9,9 +9,9 @@ RUN set -ex \
         build-base curl db-dev patch m4 perl gmp-dev zlib-dev \
         opam \
         git go \
-    && opam init --auto-setup -y \
-    && opam switch 4.04.2 \
-    && eval `opam config env` \
+    && opam init --auto-setup --disable-sandboxing -y \
+    && opam switch create 4.04.2 \
+    && eval `opam env` \
     && opam install -y cryptokit num camlp4 \
     && curl -sSL https://bitbucket.org/skskeyserver/sks-keyserver/get/default.tar.gz | tar xz \
     && mv skskeyserver* sks-keyserver \
