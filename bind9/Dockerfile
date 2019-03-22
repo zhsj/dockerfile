@@ -5,7 +5,7 @@ RUN set -ex \
     && export BINDVERSION=9.14.0 \
     && apk upgrade --update \
     && apk add --virtual .bind9-builddeps build-base bash curl python3 git go perl \
-       bsd-compat-headers json-c-dev libcap-dev libressl-dev libxml2-dev linux-headers musl-dev \
+       bsd-compat-headers json-c-dev libcap-dev libxml2-dev linux-headers openssl-dev musl-dev \
     && apk add --virtual .bind9-deps libxml2 libcap libgcc s6 json-c \
     && python3 -m pip install ply \
     && curl -sSL https://ftp.isc.org/isc/bind9/$BINDVERSION/bind-$BINDVERSION.tar.gz | tar xz \
