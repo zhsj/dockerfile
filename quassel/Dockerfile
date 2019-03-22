@@ -29,6 +29,7 @@ RUN set -ex \
       && cd .. \
     && git clone $QS_GIT $QS_DIR \
     && cd $QS_DIR \
+        && sed -i '/CMAKE_AUTOUIC/d' CMakeLists.txt \
         && cmake . -DCMAKE_VERBOSE_MAKEFILE=ON -DWANT_CORE=ON -DWANT_QTCLIENT=OFF -DWANT_MONO=OFF \
            -DWITH_KDE=OFF -DWITH_BUNDLED_ICONS=OFF -DWITH_WEBKIT=OFF -DWITH_WEBENGINE=OFF \
            -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$QT_DIST \
