@@ -28,7 +28,6 @@ RUN set -ex \
     && rm -rf /usr/lib/python3* \
     && rm -rf ~/.cache \
     && rm -rf /var/cache/apk/* \
-    && /usr/local/bind9/sbin/rndc-confgen -a -r /dev/urandom \
     && echo 'include "/etc/bind/named.conf";' > /usr/local/bind9/etc/named.conf
 
 ADD files /etc/

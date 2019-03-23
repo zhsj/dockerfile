@@ -1,2 +1,4 @@
-#! /bin/execlineb -P
-cd /etc/bind /usr/local/bind9/sbin/named -g
+#!/bin/sh
+cd /etc/bind || exit 1
+[ -e /usr/local/bind9/etc/rndc.key ] || /usr/local/bind9/sbin/rndc-confgen -a
+exec /usr/local/bind9/sbin/named -g
