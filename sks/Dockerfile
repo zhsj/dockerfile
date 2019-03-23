@@ -3,10 +3,10 @@ MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
     && apk upgrade --update \
-    && apk add --virtual .sks-deps db-utils libgcc gmp s6 \
+    && apk add --virtual .sks-deps db-utils gmp libgcc s6 \
     && apk add --virtual .sks-builddeps \
-        build-base curl db-dev patch m4 perl gmp-dev zlib-dev \
-        opam \
+        build-base curl m4 opam patch perl \
+        db-dev gmp-dev zlib-dev \
     && opam init --auto-setup --disable-sandboxing -y \
     && opam switch create 4.04.2 \
     && eval `opam env` \
@@ -20,12 +20,12 @@ RUN set -ex \
         && make dep \
         && make sks \
         && strip sks \
-        && install -m755 sks /usr/sbin/sks \
+        && install -m755 sks /usr/local/bin/sks \
         && cd .. \
         && rm -rf sks-keyserver \
-    && rm -rf ~/.opam \
     && apk --purge del .sks-builddeps \
     && rm -rf /var/cache/apk/* \
+    && rm -rf ~/.opam \
     && rm -rf ~/.cache/ ~/.gitconfig ~/.profile \
     && mkdir -p /var/lib/sks
 

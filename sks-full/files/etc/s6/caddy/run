@@ -1,3 +1,3 @@
-#!/bin/execlineb -P
-export CADDYPATH /var/lib/sks/caddy
-/usr/bin/caddy -conf /var/lib/sks/caddy/Caddyfile -agree
+#!/bin/sh
+export CADDYPATH=/var/lib/sks/caddy
+exec caddy -conf /var/lib/sks/caddy/Caddyfile -agree

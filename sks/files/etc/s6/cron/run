@@ -1,2 +1,2 @@
-#!/bin/execlineb -P
-crond -f -c /usr/local/etc/crontabs
+#!/bin/sh
+exec crond -f -c /usr/local/etc/crontabs
