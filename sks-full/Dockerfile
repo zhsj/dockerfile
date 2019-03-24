@@ -42,6 +42,7 @@ RUN set -ex \
         && rm -rf "$GOPATH" \
     && apk --purge del .sks-builddeps \
     && rm -rf /var/cache/apk/* \
+    && rm -rf /tmp/* \
     && rm -rf ~/.opam \
     && rm -rf ~/.cache/ ~/.gitconfig ~/.profile \
     && mkdir -p /var/lib/sks
