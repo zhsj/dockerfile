@@ -3,10 +3,11 @@ MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
     && export SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
-    && export KCPTUN_PATH=github.com/xtaci/kcptun/server \
+    && export KCPTUN_PATH=github.com/xtaci/kcptun/server@master \
     && export SS_DIR=shadowsocks-libev \
     && apk upgrade --update \
-    && apk add --virtual .ss-builddeps git cmake build-base linux-headers libressl-dev libsodium-dev c-ares-dev \
+    && apk add --virtual .ss-builddeps git cmake build-base \
+       linux-headers libressl-dev libsodium-dev libsodium-static c-ares-dev \
        mbedtls-dev mbedtls-static libev-dev pcre-dev zlib-dev \
        go \
     && apk add --virtual .ss-deps s6 \
@@ -18,11 +19,11 @@ RUN set -ex \
         && install -m755 bin/ss-server /usr/local/bin/ss-server \
         && cd ../.. \
         && rm -rf $SS_DIR \
-    && mkdir /gobuild \
-        && export GOPATH=/gobuild \
+    && export GO111MODULE=on \
+    && export GOPROXY=https://proxy.golang.org \
         && go get -ldflags="-s -w" $KCPTUN_PATH \
-        && install -m755 /gobuild/bin/server /usr/local/bin/kcptun-server \
-        && rm -rf /gobuild /usr/lib/go/pkg \
+        && install -m755 ~/go/bin/server /usr/local/bin/kcptun-server \
+        && rm -rf ~/go \
     && rm -rf ~/.cache \
     && apk del --purge .ss-builddeps \
     && rm -rf /var/cache/apk/*

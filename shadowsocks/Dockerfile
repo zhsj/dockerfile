@@ -5,7 +5,8 @@ RUN set -ex \
     && export SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
     && export SS_DIR=shadowsocks-libev \
     && apk upgrade --update \
-    && apk add --virtual .ss-builddeps git cmake build-base linux-headers libressl-dev libsodium-dev c-ares-dev \
+    && apk add --virtual .ss-builddeps git cmake build-base \
+       linux-headers libressl-dev libsodium-dev libsodium-static c-ares-dev \
        mbedtls-dev mbedtls-static libev-dev pcre-dev zlib-dev \
     && git clone --recursive $SS_GIT $SS_DIR \
     && cd $SS_DIR/build \
