@@ -1,2 +1,0 @@
-#!/bin/sh
-exec sks -stdoutlog -basedir /var/lib/sks db

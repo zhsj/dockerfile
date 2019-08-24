@@ -1,3 +1,0 @@
-#!/bin/sh
-export CADDYPATH=/var/lib/sks/caddy
-exec caddy -conf /var/lib/sks/caddy/Caddyfile -agree
