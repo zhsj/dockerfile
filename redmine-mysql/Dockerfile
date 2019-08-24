@@ -4,7 +4,7 @@ MAINTAINER Shengjing Zhu <i@zhsj.me>
 ENV RAILS_ENV=production
 RUN set -ex \
     && export BUNDLE_SILENCE_ROOT_WARNING=1 \
-    && export REDMINE_VER=4.0.2 \
+    && export REDMINE_VER=4.0.4 \
     && cd / \
     && apk --update add --virtual .redmine-deps \
          ruby ruby-bundler ruby-bigdecimal ruby-json sqlite-libs tzdata mariadb-connector-c \
