@@ -12,6 +12,8 @@ and files inside this directory are licensed under GPL-2.0.
 Sample command to run:
 
 ```
+mkdir -p /srv/docker/redmine/files
+chown 1000:1000 /srv/docker/redmine/files
 docker run -it -d --name redmine \
        -v /srv/docker/redmine/files:/redmine/files \
        zhusj/redmine
