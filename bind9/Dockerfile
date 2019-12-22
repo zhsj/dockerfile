@@ -2,7 +2,7 @@ FROM alpine
 MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
-    && export BINDVERSION=9.14.5 \
+    && export BINDVERSION=9.14.9 \
     && apk upgrade --update \
     && apk add --virtual .bind9-builddeps build-base bash curl python3 git go perl \
        bsd-compat-headers json-c-dev libcap-dev libxml2-dev linux-headers openssl-dev musl-dev \
