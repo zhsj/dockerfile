@@ -7,8 +7,6 @@ RUN set -ex \
 
 EXPOSE 22/tcp
 
-VOLUME /home
-
 ADD entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D", "-e"]
