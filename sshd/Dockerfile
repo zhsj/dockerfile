@@ -2,7 +2,7 @@ FROM debian:buster-slim
 
 RUN set -ex \
     && apt-get update \
-    && apt-get install -y --no-install-recommends openssh-server \
+    && apt-get install -y --no-install-recommends openssh-server busybox \
     && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 22/tcp
