@@ -10,7 +10,7 @@ RUN set -ex \
     && export QT_SCRIPT_DIR=qtscript-everywhere-src-"$QT_VER" \
     && export QS_GIT=https://github.com/quassel/quassel.git \
     && export QS_DIR=quassel \
-    && apk add --update --virtual .qs-deps libgcc libssl1.1 libstdc++ zlib \
+    && apk add --update --virtual .qs-deps libgcc libssl1.1 libstdc++ zlib su-exec \
     && apk add --virtual .qs-builddeps build-base bash cmake curl git perl \
        boost-dev linux-headers openssl-dev zlib-dev \
     && curl -sSL $QT_BASE_SRC | tar xJ \
@@ -45,8 +45,12 @@ RUN set -ex \
        && rm -rf lib/libQt5Script.so* \
     && apk del --purge .qs-builddeps \
     && rm -rf /var/cache/apk/* \
-    && mkdir /var/lib/quassel
+    && mkdir /var/lib/quassel \
+    && adduser -h /var/lib/quassel -s /sbin/nologin -u 1000 -D -H quassel \
+    && chown -R quassel:quassel /var/lib/quassel
 
-VOLUME ["/var/lib/quassel"]
-CMD ["quasselcore", "--configdir=/var/lib/quassel/"]
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 EXPOSE 4242
+VOLUME ["/var/lib/quassel"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["quasselcore", "--configdir=/var/lib/quassel/"]

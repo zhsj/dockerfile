@@ -9,10 +9,8 @@ RUN set -ex \
     && echo 'PassThroughPattern: .*' >> /etc/apt-cacher-ng/docker.conf \
     && chown apt-cacher-ng:apt-cacher-ng /run/apt-cacher-ng
 
-COPY entrypoint.sh /usr/sbin/entrypoint.sh
-
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 EXPOSE 3142/tcp
 VOLUME /var/cache/apt-cacher-ng
-
-ENTRYPOINT ["/usr/sbin/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["apt-cacher-ng", "-c", "/etc/apt-cacher-ng"]
