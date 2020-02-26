@@ -2,7 +2,7 @@
 
 set -e
 
-if "$1" == "/usr/sbin/sshd"; then
+if [ "$1" = "/usr/sbin/sshd" ]; then
 	user="${SSH_USER:-root}"
 	password="${SSH_PASSWORD:-$(perl -e 'print map{("a".."z","A".."Z",0..9)[int(rand(62))]}(1..12)')}"
 
@@ -20,7 +20,6 @@ if "$1" == "/usr/sbin/sshd"; then
 
 	mkdir -p /run/sshd
 	chmod 0755 /run/sshd
-
 fi
 
 exec "$@"
