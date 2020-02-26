@@ -22,6 +22,7 @@ RUN set -ex \
        && go build -ldflags="-s -w" -o /usr/local/bin/v2ray-plugin . \
        && upx /usr/local/bin/v2ray-plugin \
        && cd .. \
+       && rm -rf $V2RAY_DIR \
     && rm -rf ~/go /usr/lib/go \
     && rm -rf ~/.cache \
     && apk del --purge .ss-builddeps \

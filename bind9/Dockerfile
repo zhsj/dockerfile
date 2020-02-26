@@ -16,7 +16,7 @@ RUN set -ex \
        && make \
        && make install \
        && bash -c 'rm -rf /usr/local/bind9/{include,share}' \
-       && bash -c 'rm -rf /usr/local/lib/{*.la,python3*}' \
+       && bash -c 'rm -rf /usr/local/bind9/lib/{*.la,python3*}' \
        && bash -c 'strip /usr/local/bind9/{bin,sbin,lib}/* || exit 0' \
     && cd .. \
     && rm -rf bind-$BINDVERSION \

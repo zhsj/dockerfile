@@ -1,4 +1,5 @@
 #!/bin/sh
 cd /etc/bind || exit 1
+chown "$(id -u)" . || exit 1
 [ -e /usr/local/bind9/etc/rndc.key ] || /usr/local/bind9/sbin/rndc-confgen -a
 exec /usr/local/bind9/sbin/named -g
