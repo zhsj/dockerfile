@@ -42,6 +42,7 @@ RUN set -ex \
        && rm -rf bin doc include mkspecs plugins/bearer \
        && rm -rf lib/cmake lib/pkgconfig lib/*.a lib/*.la lib/*.prl \
        && rm -rf lib/libQt5Concurrent.so* lib/libQt5Test.so* lib/libQt5Xml.so* lib/*.so \
+       && rm -rf lib/libQt5Script.so* \
     && apk del --purge .qs-builddeps \
     && rm -rf /var/cache/apk/* \
     && mkdir /var/lib/quassel
