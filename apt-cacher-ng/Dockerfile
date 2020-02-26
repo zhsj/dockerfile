@@ -2,16 +2,17 @@ FROM debian:bullseye-slim
 
 RUN set -ex \
     && apt-get update \
-    && apt-get install -y --no-install-recommends dumb-init apt-cacher-ng ca-certificates \
+    && apt-get install -y --no-install-recommends apt-cacher-ng ca-certificates dumb-init \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && echo 'ForeGround: 1' >> /etc/apt-cacher-ng/docker.conf \
     && echo 'PassThroughPattern: .*' >> /etc/apt-cacher-ng/docker.conf \
-    && ln -sf /dev/stdout /var/log/apt-cacher-ng/apt-cacher.out \
-    && ln -sf /dev/stderr /var/log/apt-cacher-ng/apt-cacher.err
+    && chown apt-cacher-ng:apt-cacher-ng /run/apt-cacher-ng
 
 COPY entrypoint.sh /usr/sbin/entrypoint.sh
 
 EXPOSE 3142/tcp
+VOLUME /var/cache/apt-cacher-ng
 
-CMD ["dumb-init", "--", "apt-cacher-ng", "-c", "/etc/apt-cacher-ng"]
+ENTRYPOINT ["/usr/sbin/entrypoint.sh"]
+CMD ["apt-cacher-ng", "-c", "/etc/apt-cacher-ng"]
