@@ -4,7 +4,7 @@ MAINTAINER Shengjing Zhu <i@zhsj.me>
 RUN set -ex \
     && export BINDVERSION=9.16.0 \
     && apk upgrade --update \
-    && apk add --virtual .bind9-builddeps build-base bash curl python3 git go perl \
+    && apk add --virtual .bind9-builddeps build-base bash curl python3 git go perl upx \
        bsd-compat-headers json-c-dev libcap-dev libuv-dev libxml2-dev linux-headers openssl-dev musl-dev \
     && apk add --virtual .bind9-deps json-c libcap libgcc libuv libxml2 s6 \
     && python3 -m pip install ply \
@@ -16,6 +16,7 @@ RUN set -ex \
        && make \
        && make install \
        && bash -c 'rm -rf /usr/local/bind9/{include,share}' \
+       && bash -c 'rm -rf /usr/local/lib/{*.la,python3*}' \
        && bash -c 'strip /usr/local/bind9/{bin,sbin,lib}/* || exit 0' \
     && cd .. \
     && rm -rf bind-$BINDVERSION \
@@ -23,6 +24,7 @@ RUN set -ex \
        && export GOPATH=/gobuild \
        && go get -ldflags="-s -w" github.com/adnanh/webhook \
        && install -m 755 /gobuild/bin/webhook /usr/local/bin/webhook \
+       && upx /usr/local/bin/webhook \
        && rm -rf /gobuild /usr/lib/go \
     && apk del --purge .bind9-builddeps \
     && rm -rf /usr/lib/python3* \

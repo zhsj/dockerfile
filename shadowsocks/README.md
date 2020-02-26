@@ -2,15 +2,12 @@
 
 ![](https://images.microbadger.com/badges/image/zhusj/shadowsocks.svg)
 
-Only ss-server is included.
+ss-server and v2ray-plugin are included.
 
-* `zhusj/shadowsocks:latest` is the nomarl shadowsocks-libev server.
-* `zhusj/shadowsocks:kcptun` includes kcptun.
+Default port is 443, encrypt method is xchacha20-ietf-poly1305.
 
-Default ports are 443(for shadowsocks) and 444(for kcptun),
-encrypt method is xchacha20-ietf-poly1305.
-
-See Dockerfile for other default options and the available environment variables.
+See [start.sh](https://github.com/zhsj/dockerfile/blob/master/shadowsocks/start.sh)
+for other default options and the available environment variables.
 
 ## Guide
 

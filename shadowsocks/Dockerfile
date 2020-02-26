@@ -1,11 +1,12 @@
 FROM alpine
-MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
     && export SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
+    && export V2RAY_GIT=https://github.com/shadowsocks/v2ray-plugin \
     && export SS_DIR=shadowsocks-libev \
+    && export V2RAY_DIR=v2ray-plugin \
     && apk upgrade --update \
-    && apk add --virtual .ss-builddeps git cmake build-base \
+    && apk add --virtual .ss-builddeps git cmake build-base go upx \
        linux-headers libressl-dev libsodium-dev libsodium-static c-ares-dev \
        mbedtls-dev mbedtls-static libev-dev pcre-dev zlib-dev \
     && git clone --recursive $SS_GIT $SS_DIR \
@@ -16,15 +17,18 @@ RUN set -ex \
         && install -m755 bin/ss-server /usr/local/bin/ss-server \
         && cd ../.. \
         && rm -rf $SS_DIR \
+    && git clone $V2RAY_GIT $V2RAY_DIR \
+    && cd $V2RAY_DIR \
+       && go build -ldflags="-s -w" -o /usr/local/bin/v2ray-plugin . \
+       && upx /usr/local/bin/v2ray-plugin \
+       && cd .. \
+    && rm -rf ~/go /usr/lib/go \
+    && rm -rf ~/.cache \
     && apk del --purge .ss-builddeps \
-    && rm -rf /var/cache/apk/*
+    && rm -rf /var/cache/apk/* \
+    && rm -rf /tmp/*
 
 EXPOSE 443 443/udp
 
-CMD ss-server -s ${SERVER_ADDR:-0.0.0.0} \
-              -p ${SERVER_PORT:-443} \
-              -k ${PASSWORD:-$(hostname)} \
-              -m ${METHOD:-chacha20-ietf-poly1305} \
-              -t ${TIMEOUT:-300} \
-              -d ${DNS_ADDR:-8.8.8.8} \
-              --fast-open -u
+COPY start.sh /usr/local/bin
+CMD ["/usr/local/bin/start.sh"]
