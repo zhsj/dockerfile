@@ -4,10 +4,9 @@ MAINTAINER Shengjing Zhu <i@zhsj.me>
 RUN set -ex \
     && export BINDVERSION=9.16.3 \
     && apk upgrade --update \
-    && apk add --virtual .bind9-builddeps build-base bash curl python3 git go perl upx \
+    && apk add --virtual .bind9-builddeps build-base bash curl python3 py3-ply git go perl upx \
        bsd-compat-headers json-c-dev libcap-dev libuv-dev libxml2-dev linux-headers openssl-dev musl-dev \
     && apk add --virtual .bind9-deps json-c libcap libgcc libuv libxml2 s6 \
-    && python3 -m pip install ply \
     && curl -sSL https://ftp.isc.org/isc/bind9/$BINDVERSION/bind-$BINDVERSION.tar.xz | tar xJ \
     && cd bind-$BINDVERSION \
        && CFLAGS="-O3" ./configure --prefix=/usr/local/bind9 --exec-prefix=/usr/local/bind9 \
