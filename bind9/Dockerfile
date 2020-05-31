@@ -22,9 +22,9 @@ RUN set -ex \
     && mkdir /gobuild \
        && export GOPATH=/gobuild \
        && cd /gobuild \
-       && git clone --branch=2.6.11 https://github.com/adnanh/webhook github.com/adnanh/webhook \
-       && cd github.com/adnanh/webhook \
-       && go build go build -ldflags="-s -w" -o /usr/local/bin/webhook . \
+       && git clone --branch=2.6.11 https://github.com/adnanh/webhook src/github.com/adnanh/webhook \
+       && cd src/github.com/adnanh/webhook \
+       && go build -ldflags="-s -w" -o /usr/local/bin/webhook . \
        && upx /usr/local/bin/webhook \
        && cd / \
        && rm -rf /gobuild /usr/lib/go \
