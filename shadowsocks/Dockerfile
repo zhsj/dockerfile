@@ -7,7 +7,7 @@ RUN set -ex \
     && export V2RAY_DIR=v2ray-plugin \
     && apk upgrade --update \
     && apk add --virtual .ss-builddeps git cmake build-base go upx \
-       linux-headers libressl-dev libsodium-dev libsodium-static c-ares-dev \
+       linux-headers libressl-dev libsodium-dev libsodium-static c-ares-dev c-ares-static \
        mbedtls-dev mbedtls-static libev-dev pcre-dev zlib-dev \
     && git clone --recursive $SS_GIT $SS_DIR \
     && cd $SS_DIR/build \
