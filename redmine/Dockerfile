@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.11
 MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 ENV RAILS_ENV=production
