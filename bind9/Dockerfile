@@ -22,9 +22,12 @@ RUN set -ex \
     && rm -rf bind-$BINDVERSION \
     && mkdir /gobuild \
        && export GOPATH=/gobuild \
-       && go get -ldflags="-s -w" github.com/adnanh/webhook \
-       && install -m 755 /gobuild/bin/webhook /usr/local/bin/webhook \
+       && cd /gobuild \
+       && git clone --branch=2.6.11 https://github.com/adnanh/webhook github.com/adnanh/webhook \
+       && cd github.com/adnanh/webhook \
+       && go build go build -ldflags="-s -w" -o /usr/local/bin/webhook . \
        && upx /usr/local/bin/webhook \
+       && cd / \
        && rm -rf /gobuild /usr/lib/go \
     && apk del --purge .bind9-builddeps \
     && rm -rf /usr/lib/python3* \
