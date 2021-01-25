@@ -12,7 +12,7 @@ password="${SSH_PASSWORD:-$(perl -e 'print map{("a".."z","A".."Z",0..9)[int(rand
 printf 'Username: %s\nPassword: %s\n' "$user" "$password"
 
 if [ "$user" = "root" ]; then
-	sed -i '/PermitRootLogin/ c PermitRootLogin yes' /etc/ssh/sshd_config
+	sed -i '/PermitRootLogin/ c PermitRootLogin yes' /etc/ssh/sshd_config || true
 fi
 
 if ! getent passwd "$user" >/dev/null; then
