@@ -1,0 +1,6 @@
+#!/bin/sh
+set -ex
+
+port="${HUPROXY_PORT:-8888}"
+
+exec /usr/local/bin/huproxy -listen ":$port"
