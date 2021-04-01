@@ -1,5 +1,4 @@
 FROM debian:buster-slim
-MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
     && apt-get update \

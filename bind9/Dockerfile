@@ -1,5 +1,4 @@
 FROM alpine
-MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
     && export BINDVERSION=9.16.13 \

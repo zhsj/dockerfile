@@ -1,5 +1,4 @@
 FROM alpine
-MAINTAINER Shengjing Zhu <i@zhsj.me>
 
 RUN set -ex \
     && export QT_VER=5.13.2 \
