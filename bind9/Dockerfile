@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.13
 
 RUN set -ex \
     && export BINDVERSION=9.16.18 \
