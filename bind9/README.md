@@ -1,7 +1,5 @@
 # Bind9
 
-![](https://images.microbadger.com/badges/image/zhusj/bind9.svg)
-
 `/etc/bind` should have two major files: `named.conf` and `hook.sh`.
 
 `named.conf` is the configure file for bind, and you can include any other

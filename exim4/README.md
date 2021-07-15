@@ -1,7 +1,5 @@
 # Exim4
 
-![](https://images.microbadger.com/badges/image/zhusj/exim4.svg)
-
 Based on Debian Exim4, but only supports:
 
 * mail sent by smarthost; no local mail

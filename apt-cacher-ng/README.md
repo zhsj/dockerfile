@@ -1,7 +1,5 @@
 # Apt-Cacher NG
 
-![](https://images.microbadger.com/badges/image/zhusj/apt-cacher-ng.svg)
-
 ## Guide
 
 Sample command to run:

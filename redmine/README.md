@@ -1,7 +1,5 @@
 # Redmine
 
-![](https://images.microbadger.com/badges/image/zhusj/redmine.svg)
-
 Redmine master branch. Database is SQLite3.
 
 It's forked from [serverbee/docker-redmine-alpine](https://github.com/serverbee/docker-redmine-alpine),
