@@ -3,6 +3,8 @@ set -e
 
 case "$1" in
     rails|rake)
+        set -- bundle exec "$@"
+
         if [ ! -f './config/configuration.yml' ]; then
             if [ -n "$EMAIL_SMTP" ]; then
                 cat > './config/configuration.yml' <<-YML
@@ -26,15 +28,15 @@ case "$1" in
         fi
 
         if [ ! -f ./config/initializers/secret_token.rb ]; then
-            rake generate_secret_token
+            bundle exec rake generate_secret_token
         fi
 
         if [ "$1" != 'rake' ] && [ -z "$REDMINE_NO_DB_MIGRATE" ]; then
-            rake db:migrate
+            bundle exec rake db:migrate
         fi
 
         if [ "$1" != 'rake' ] && [ -n "$REDMINE_PLUGINS_MIGRATE" ]; then
-            rake redmine:plugins:migrate
+            bundle exec rake redmine:plugins:migrate
         fi
 
         # remove PID file to enable restarting the container

@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM alpine:3.13
 
 ENV RAILS_ENV=production
 RUN set -ex \
