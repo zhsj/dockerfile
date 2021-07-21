@@ -1,9 +1,5 @@
 # Exim4
 
-Based on Debian Exim4, but only supports:
-
-* mail sent by smarthost; no local mail
-
 Environments:
 
 * `SMTP_HOST`
