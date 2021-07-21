@@ -3,10 +3,11 @@ FROM debian:bullseye-slim
 RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-       sudo \
+       ca-certificates \
        curl \
        git \
-       ca-certificates \
+       git-lfs \
+       sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
