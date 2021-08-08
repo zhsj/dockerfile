@@ -1,3 +1,8 @@
+FROM golang as builder
+COPY ./register /go/src/register
+RUN cd /go/src/register/ \
+    && go build -ldflags="-w -s" -trimpath -o /go/bin/gha-register .
+
 FROM debian:bullseye-slim
 
 RUN set -ex \
@@ -30,6 +35,7 @@ RUN set -ex \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+COPY --from=builder /go/bin/gha-register /usr/local/bin/
 COPY entrypoint.sh /usr/local/bin
 WORKDIR /home/runner
 USER runner
