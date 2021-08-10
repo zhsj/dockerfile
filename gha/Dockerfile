@@ -30,8 +30,6 @@ RUN set -ex \
     && latest=$(curl --silent $release | grep browser_download_url | sed -E 's/.*"([^\"]+)".*/\1/' | grep linux-x64) \
     && curl -sL "$latest" | tar -xz -C /home/runner \
     && /home/runner/bin/installdependencies.sh \
-    && echo "https://github.com/actions/runner/issues/1204" \
-    && apt-get install -y libicu67 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
