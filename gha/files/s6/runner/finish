@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -ex
+
+cd /home/runner || exit 125
+
+if [ -n "$RUNNER_TOKEN" ]; then
+  exit 0
+fi
+
+REMOVE_TOKEN=$(gha-helper remove)
+
+./config.sh remove --token "$REMOVE_TOKEN"

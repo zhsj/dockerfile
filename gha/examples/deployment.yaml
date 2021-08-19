@@ -60,3 +60,4 @@ spec:
           emptyDir: {}
         - name: docker-data
           emptyDir: {}
+      terminationGracePeriodSeconds: 300

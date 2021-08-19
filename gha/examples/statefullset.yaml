@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gha-runner
+  labels:
+    app: gha-runner
+spec:
+  clusterIP: None
+  selector:
+    app: gha-runner
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: runner
+spec:
+  selector:
+    matchLabels:
+      app: gha-runner
+  template:
+    metadata:
+      labels:
+        app: gha-runner
+    spec:
+      containers:
+        - name: runner
+          image: zhusj/gha
+          imagePullPolicy: Always
+          env:
+            - name: DOCKER_HOST
+              value: tcp://localhost:2375
+            - name: RUNNER_SCOPE
+              value: FIXME
+            - name: APP_ID
+              value: FIXME
+            - name: APP_KEY
+              value: FIXME
+            - name: INSTALLATION_ID
+              value: FIXME
+            - name: ACTIONS_RUNNER_INPUT_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          resources:
+            requests:
+              cpu: 500m
+              memory: 500Mi
+            limits:
+              cpu: 1
+              memory: 1Gi
+          volumeMounts:
+            - mountPath: /home/runner/_work
+              name: runner-work
+        - name: docker
+          image: zhusj/dind
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 12
+              memory: 64Gi
+            limits:
+              cpu: 12
+              memory: 64Gi
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /home/runner/_work
+              name: runner-work
+            - mountPath: /home/rootless/.local
+              name: docker-data
+      volumes:
+        - name: runner-work
+          emptyDir: {}
+        - name: docker-data
+          emptyDir: {}
+      terminationGracePeriodSeconds: 300

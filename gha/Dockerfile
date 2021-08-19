@@ -1,7 +1,7 @@
 FROM golang as builder
-COPY ./register /go/src/register
-RUN cd /go/src/register/ \
-    && go build -ldflags="-w -s" -trimpath -o /go/bin/gha-register .
+COPY ./helper /go/src/helper
+RUN cd /go/src/helper/ \
+    && go build -ldflags="-w -s" -trimpath -o /go/bin/gha-helper .
 
 FROM debian:bullseye-slim
 
@@ -12,6 +12,7 @@ RUN set -ex \
        curl \
        git \
        git-lfs \
+       s6 \
        sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -33,8 +34,9 @@ RUN set -ex \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /go/bin/gha-register /usr/local/bin/
-COPY entrypoint.sh /usr/local/bin
-WORKDIR /home/runner
+COPY --from=builder /go/bin/gha-helper /usr/local/bin/
+ADD --chown=runner:runner files /home/runner
+
 USER runner
-CMD ["/usr/local/bin/entrypoint.sh"]
+WORKDIR /home/runner
+CMD ["s6-svscan", "/home/runner/s6"]

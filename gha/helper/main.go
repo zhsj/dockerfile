@@ -60,12 +60,12 @@ func accessToken(installationID, appToken string) (string, error) {
 	return result.Token, nil
 }
 
-func runnerToken(authToken string) (string, error) {
+func runnerToken(authToken, typ string) (string, error) {
 	var scopePath string
 	if scope.repo == "" {
 		scopePath = "orgs/" + scope.user + "/actions/runners/registration-token"
 	} else {
-		scopePath = "repos/" + scope.user + "/" + scope.repo + "/actions/runners/registration-token"
+		scopePath = "repos/" + scope.user + "/" + scope.repo + "/actions/runners/" + typ + "-token"
 	}
 	addr := "https://api.github.com/" + scopePath
 	req, err := http.NewRequest("POST", addr, nil)
@@ -96,6 +96,7 @@ func main() {
 	appID := os.Getenv("APP_ID")
 	appKey := os.Getenv("APP_KEY")
 	installationID := os.Getenv("INSTALLATION_ID")
+	runnerTokenType := os.Args[1]
 
 	runnerScope := strings.Split(os.Getenv("RUNNER_SCOPE"), "/")
 	scope.user = runnerScope[0]
@@ -122,7 +123,7 @@ func main() {
 		log.Fatal("missing PAT or APP_ID/APP_KEY/INSTALLATION_ID")
 	}
 
-	got, err := runnerToken(authToken)
+	got, err := runnerToken(authToken, runnerTokenType)
 	if err != nil {
 		log.Fatal(err)
 	}
