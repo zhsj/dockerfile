@@ -1,7 +1,7 @@
 FROM alpine:3.13
 
 RUN set -ex \
-    && export BINDVERSION=9.16.18 \
+    && export BINDVERSION=9.16.20 \
     && apk upgrade --update \
     && apk add --virtual .bind9-builddeps build-base bash curl python3 py3-ply git go perl upx \
        bsd-compat-headers json-c-dev libcap-dev libuv-dev libxml2-dev linux-headers openssl-dev musl-dev \
