@@ -20,11 +20,16 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Get build date
         run: echo "DATE=$(date -u '+%Y%m%d%H%M')" >> $GITHUB_ENV
-      - name: Build and push
+      - name: Build
+        uses: docker/bake-action@master
+        with:
+          push: false
+          no-cache: true
+      - name: Push
         uses: docker/bake-action@master
         with:
           push: true
-          no-cache: true
+          no-cache: false
       - name: Update repo description
         run: ./sync-description.py
         env:

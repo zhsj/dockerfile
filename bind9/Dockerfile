@@ -1,4 +1,4 @@
-FROM alpine:3.13
+FROM alpine:3.14
 
 RUN set -ex \
     && export BINDVERSION=9.16.20 \
@@ -7,7 +7,7 @@ RUN set -ex \
        bsd-compat-headers json-c-dev libcap-dev libuv-dev libxml2-dev linux-headers openssl-dev musl-dev \
     && apk add --virtual .bind9-deps json-c libcap libgcc libuv libxml2 s6 \
     && curl -sSL https://ftp.isc.org/isc/bind9/$BINDVERSION/bind-$BINDVERSION.tar.xz | tar xJ \
-    && cd bind-$BINDVERSION \
+       && cd bind-$BINDVERSION \
        && CFLAGS="-O3" ./configure --prefix=/usr/local/bind9 --exec-prefix=/usr/local/bind9 \
           --with-libxml2 --with-libjson --with-libtool --enable-static=no \
           --enable-full-report \
@@ -16,17 +16,14 @@ RUN set -ex \
        && bash -c 'rm -rf /usr/local/bind9/{include,share}' \
        && bash -c 'rm -rf /usr/local/bind9/lib/{*.la,python3*}' \
        && bash -c 'strip /usr/local/bind9/{bin,sbin,lib}/* || exit 0' \
-    && cd .. \
-    && rm -rf bind-$BINDVERSION \
-    && mkdir /gobuild \
-       && export GOPATH=/gobuild \
-       && cd /gobuild \
-       && git clone --branch=2.6.11 https://github.com/adnanh/webhook src/github.com/adnanh/webhook \
-       && cd src/github.com/adnanh/webhook \
+       && cd .. \
+       && rm -rf bind-$BINDVERSION \
+    && git clone --branch=2.8.0 https://github.com/adnanh/webhook \
+       && cd /webhook \
        && go build -ldflags="-s -w" -o /usr/local/bin/webhook . \
        && upx /usr/local/bin/webhook \
-       && cd / \
-       && rm -rf /gobuild /usr/lib/go \
+       && cd .. \
+       && rm -rf webhook ~/go /usr/lib/go \
     && apk del --purge .bind9-builddeps \
     && rm -rf /usr/lib/python3* \
     && rm -rf ~/.cache \

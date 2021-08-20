@@ -8,7 +8,7 @@ RUN go env -w CGO_ENABLED=0
 RUN go install -ldflags="-w -s" -v github.com/shadowsocks/v2ray-plugin@master
 RUN upx /go/bin/v2ray-plugin
 
-FROM alpine:3.13
+FROM alpine:3.14
 
 RUN set -ex \
     && export SS_GIT=https://github.com/shadowsocks/shadowsocks-libev \
