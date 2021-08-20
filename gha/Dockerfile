@@ -21,15 +21,15 @@ RUN set -ex \
     && adduser --home /home/runner --gecos 'Runner' --disabled-password --uid 1000 runner \
     && echo "runner ALL= EXEC: NOPASSWD:ALL" >> /etc/sudoers.d/runner
 
-ENV DOCKER_VERSION=20.10.7
+ENV DOCKER_VERSION=20.10.8
 RUN set -ex \
     && curl -sSL "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" | \
          tar -xz --strip-components=1 -C /usr/local/bin docker/docker
 
+ENV RUNNER_VERSION=2.280.3
 RUN set -ex \
-    && release="https://api.github.com/repos/actions/runner/releases/latest" \
-    && latest=$(curl --silent $release | grep browser_download_url | sed -E 's/.*"([^\"]+)".*/\1/' | grep linux-x64) \
-    && curl -sL "$latest" | tar -xz -C /home/runner \
+    && curl -sL "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz" | \
+         tar -xz -C /home/runner \
     && /home/runner/bin/installdependencies.sh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
