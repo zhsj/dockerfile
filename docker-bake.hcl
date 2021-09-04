@@ -18,7 +18,7 @@ group "default" {
     "redmine",
     "shadowsocks",
     "sshd",
-
+    "warp",
   ]
 }
 
@@ -89,5 +89,13 @@ target "sshd" {
   tags = [
     "${PREFIX}/sshd:latest",
     notequal("", DATE) ? "${PREFIX}/sshd:${DATE}" : "",
+  ]
+}
+
+target "warp" {
+  context = "./warp"
+  tags = [
+    "${PREFIX}/warp:latest",
+    notequal("", DATE) ? "${PREFIX}/warp:${DATE}" : "",
   ]
 }
