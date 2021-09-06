@@ -1,4 +1,4 @@
-module warp
+module github.com/zhsj/dockerfile/warp
 
 go 1.16
 
