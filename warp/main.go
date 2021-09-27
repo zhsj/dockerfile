@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/base64"
 	"encoding/hex"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -15,9 +16,11 @@ import (
 )
 
 func main() {
+	listen := flag.String("listen", ":8080", "")
+	flag.Parse()
 	conf := getConf()
 	tnet := setupNet(conf)
-	runProxy(":8080", "172.16.0.1:2480", tnet)
+	runProxy(*listen, "172.16.0.1:2480", tnet)
 }
 
 func getConf() string {
