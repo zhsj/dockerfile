@@ -18,7 +18,7 @@ group "default" {
     "redmine",
     "shadowsocks",
     "sshd",
-    "warp",
+    "wghttp",
   ]
 }
 
@@ -92,10 +92,10 @@ target "sshd" {
   ]
 }
 
-target "warp" {
-  context = "./warp"
+target "wghttp" {
+  context = "./wghttp"
   tags = [
-    "${PREFIX}/warp:latest",
-    notequal("", DATE) ? "${PREFIX}/warp:${DATE}" : "",
+    "${PREFIX}/wghttp:latest",
+    notequal("", DATE) ? "${PREFIX}/wghttp:${DATE}" : "",
   ]
 }
