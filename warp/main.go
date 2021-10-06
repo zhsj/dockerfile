@@ -5,9 +5,9 @@ import (
 	"encoding/hex"
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"net"
+	"net/http"
 	"os"
 
 	"golang.zx2c4.com/wireguard/conn"
@@ -20,7 +20,7 @@ func main() {
 	flag.Parse()
 	conf := getConf()
 	tnet := setupNet(conf)
-	runProxy(*listen, "172.16.0.1:2480", tnet)
+	runProxy(*listen, tnet)
 }
 
 func getConf() string {
@@ -53,7 +53,7 @@ func getConf() string {
 		`private_key=%s
 public_key=%s
 endpoint=%s
-allowed_ip=172.16.0.0/24
+allowed_ip=0.0.0.0/0
 `,
 		hex.EncodeToString(privateKey),
 		hex.EncodeToString(peerKey),
@@ -65,7 +65,7 @@ allowed_ip=172.16.0.0/24
 func setupNet(conf string) *netstack.Net {
 	tun, tnet, err := netstack.CreateNetTUN(
 		[]net.IP{net.ParseIP("172.16.0.2")},
-		nil, 1280,
+		[]net.IP{net.ParseIP("1.0.0.1")}, 1280,
 	)
 	if err != nil {
 		log.Fatal(err)
@@ -80,35 +80,15 @@ func setupNet(conf string) *netstack.Net {
 	return tnet
 }
 
-func runProxy(local, remote string, remoteNet *netstack.Net) {
+func runProxy(local string, remoteNet *netstack.Net) {
 	ln, err := net.Listen("tcp", local)
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Printf("Listening on %s", local)
 
-	for {
-		conn, err := ln.Accept()
-		if err != nil {
-			log.Fatal(err)
-		}
-		go func(src net.Conn) {
-			defer src.Close()
-			dst, err := remoteNet.Dial("tcp", remote)
-			if err != nil {
-				log.Printf("dial remote: %v", err)
-				return
-			}
-			defer dst.Close()
-			c := make(chan error, 1)
-			go proxyCopy(c, src, dst)
-			go proxyCopy(c, dst, src)
-			<-c
-		}(conn)
+	s := &http.Server{Handler: httpProxyHandler(remoteNet.DialContext)}
+	if err := s.Serve(ln); err != nil {
+		log.Fatal(err)
 	}
-}
-
-func proxyCopy(c chan<- error, dst, src net.Conn) {
-	_, err := io.Copy(dst, src)
-	c <- err
 }
