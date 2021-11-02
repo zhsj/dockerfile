@@ -35,3 +35,5 @@ jobs:
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Show version name
+        run: echo "::notice::Tag is $DATE"
