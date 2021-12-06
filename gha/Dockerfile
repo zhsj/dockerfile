@@ -26,7 +26,7 @@ RUN set -ex \
     && curl -sSL "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" | \
          tar -xz --strip-components=1 -C /usr/local/bin docker/docker
 
-ENV RUNNER_VERSION=2.285.0
+ENV RUNNER_VERSION=2.285.1
 RUN set -ex \
     && curl -sL "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz" | \
          tar -xz -C /home/runner \
