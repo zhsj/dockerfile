@@ -18,7 +18,6 @@ group "default" {
     "redmine",
     "shadowsocks",
     "sshd",
-    "wghttp",
   ]
 }
 
@@ -89,13 +88,5 @@ target "sshd" {
   tags = [
     "${PREFIX}/sshd:latest",
     notequal("", DATE) ? "${PREFIX}/sshd:${DATE}" : "",
-  ]
-}
-
-target "wghttp" {
-  context = "./wghttp"
-  tags = [
-    "${PREFIX}/wghttp:latest",
-    notequal("", DATE) ? "${PREFIX}/wghttp:${DATE}" : "",
   ]
 }
