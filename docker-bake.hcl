@@ -18,6 +18,7 @@ group "default" {
     "redmine",
     "shadowsocks",
     "sshd",
+    "texlive",
   ]
 }
 
@@ -88,5 +89,13 @@ target "sshd" {
   tags = [
     "${PREFIX}/sshd:latest",
     notequal("", DATE) ? "${PREFIX}/sshd:${DATE}" : "",
+  ]
+}
+
+target "texlive" {
+  context = "./texlive"
+  tags = [
+    "${PREFIX}/texlive:latest",
+    notequal("", DATE) ? "${PREFIX}/texlive:${DATE}" : "",
   ]
 }
