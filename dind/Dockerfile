@@ -14,7 +14,7 @@ RUN set -ex \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-ENV DOCKER_VERSION=20.10.13
+ENV DOCKER_VERSION=20.10.14
 RUN set -ex \
     && /usr/lib/apt/apt-helper download-file "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" /docker.tgz \
     && tar -xz -f /docker.tgz --strip-components=1 -C /usr/local/bin docker/dockerd \
