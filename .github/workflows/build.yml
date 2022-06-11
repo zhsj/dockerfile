@@ -36,4 +36,4 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Show version name
-        run: echo "::notice::Tag is $DATE"
+        run: echo "Tag is $DATE" >> $GITHUB_STEP_SUMMARY
