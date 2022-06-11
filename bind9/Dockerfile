@@ -1,13 +1,13 @@
 FROM alpine:3.14
 
 RUN set -ex \
-    && export BINDVERSION=9.16.29 \
+    && export BIND_VERSION=9.16.29 \
     && apk upgrade --update \
     && apk add --virtual .bind9-builddeps build-base bash curl python3 py3-ply git go perl upx \
        bsd-compat-headers json-c-dev libcap-dev libuv-dev libxml2-dev linux-headers openssl-dev musl-dev \
     && apk add --virtual .bind9-deps json-c libcap libgcc libuv libxml2 s6 \
-    && curl -sSL https://ftp.isc.org/isc/bind9/$BINDVERSION/bind-$BINDVERSION.tar.xz | tar xJ \
-       && cd bind-$BINDVERSION \
+    && curl -sSL https://ftp.isc.org/isc/bind9/$BIND_VERSION/bind-$BIND_VERSION.tar.xz | tar xJ \
+       && cd bind-$BIND_VERSION \
        && CFLAGS="-O3" ./configure --prefix=/usr/local/bind9 --exec-prefix=/usr/local/bind9 \
           --with-libxml2 --with-libjson --with-libtool --enable-static=no \
           --enable-full-report \
@@ -17,7 +17,7 @@ RUN set -ex \
        && bash -c 'rm -rf /usr/local/bind9/lib/{*.la,python3*}' \
        && bash -c 'strip /usr/local/bind9/{bin,sbin,lib}/* || exit 0' \
        && cd .. \
-       && rm -rf bind-$BINDVERSION \
+       && rm -rf bind-$BIND_VERSION \
     && git clone --branch=2.8.0 https://github.com/adnanh/webhook \
        && cd /webhook \
        && go build -ldflags="-s -w" -o /usr/local/bin/webhook . \

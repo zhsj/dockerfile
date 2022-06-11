@@ -37,3 +37,5 @@ for readme in glob.glob("*/README.md"):
     )
     resp = urllib.request.urlopen(req)
     print("Result:", resp.code)
+
+# vim:ai:et:ts=4:sts=4:sw=4:
