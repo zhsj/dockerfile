@@ -63,7 +63,9 @@ spec:
               cpu: 12
               memory: 64Gi
           securityContext:
-            privileged: true
+            capabilities:
+              add:
+                - CAP_SYS_ADMIN
           volumeMounts:
             - mountPath: /home/runner/_work
               name: runner-work

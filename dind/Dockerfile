@@ -5,7 +5,7 @@ RUN set -ex \
     && apt-get install -y --no-install-recommends \
        dumb-init rootlesskit slirp4netns \
        iptables iproute2 ca-certificates \
-       containerd runc fuse-overlayfs \
+       containerd runc \
     && rm -rf \
        /usr/bin/rootlessctl \
        /usr/bin/containerd-shim-runc-v1 \
@@ -30,7 +30,6 @@ RUN set -ex \
     && chown -R rootless:rootless /home/rootless
 
 VOLUME /home/rootless/.local/share/docker
-USER rootless
 
 EXPOSE 2375
 ENTRYPOINT ["/usr/local/bin/dockerd-entrypoint.sh"]
