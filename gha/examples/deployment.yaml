@@ -51,7 +51,7 @@ spec:
           securityContext:
             capabilities:
               add:
-                - CAP_SYS_ADMIN
+                - SYS_ADMIN
           volumeMounts:
             - mountPath: /home/runner/_work
               name: runner-work
