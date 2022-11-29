@@ -1,39 +1,33 @@
 #!/bin/sh
 set -ex
 
-if [ -z "$SMTP_HOST" ] || [ -z "$SMTP_USER" ] || [ -z "$SMTP_PASSWORD" ]; then
   cat > /etc/exim4/update-exim4.conf.conf << EOF
-dc_eximconfig_configtype='internet'
 dc_other_hostnames=''
 dc_local_interfaces='0.0.0.0 ; ::0'
-dc_readhost=''
 dc_relay_domains=''
 dc_minimaldns='false'
 dc_relay_nets='0.0.0.0/0'
-dc_smarthost=''
 CFILEMODE='644'
 dc_use_split_config='true'
-dc_hide_mailname=''
 dc_mailname_in_oh='true'
 dc_localdelivery='mail_spool'
 IGNORE_SMTP_LINE_LENGTH_LIMIT='true'
 EOF
+
+if [ -z "$SMTP_HOST" ] || [ -z "$SMTP_USER" ] || [ -z "$SMTP_PASSWORD" ]; then
+  cat >> /etc/exim4/update-exim4.conf.conf << EOF
+dc_eximconfig_configtype='internet'
+dc_readhost=''
+dc_smarthost=''
+dc_hide_mailname=''
+EOF
 else
-  cat > /etc/exim4/update-exim4.conf.conf << EOF
+  cat >> /etc/exim4/update-exim4.conf.conf << EOF
 dc_eximconfig_configtype='satellite'
-dc_other_hostnames=''
-dc_local_interfaces='0.0.0.0 ; ::0'
 dc_readhost='$(hostname)'
-dc_relay_domains=''
-dc_minimaldns='false'
-dc_relay_nets='0.0.0.0/0'
 dc_smarthost='$SMTP_HOST'
-CFILEMODE='644'
-dc_use_split_config='true'
 dc_hide_mailname='true'
-dc_mailname_in_oh='true'
-dc_localdelivery='mail_spool'
-IGNORE_SMTP_LINE_LENGTH_LIMIT='true'
+REMOTE_SMTP_SMARTHOST_TLS_VERIFY_HOSTS=''
 EOF
 
   echo "*:$SMTP_USER:$SMTP_PASSWORD" > /etc/exim4/passwd.client
