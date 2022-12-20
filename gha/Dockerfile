@@ -21,7 +21,7 @@ RUN set -ex \
     && adduser --home /home/runner --gecos 'Runner' --disabled-password --uid 1000 runner \
     && echo "runner ALL= EXEC: NOPASSWD:ALL" >> /etc/sudoers.d/runner
 
-ENV DOCKER_VERSION=20.10.21
+ENV DOCKER_VERSION=20.10.22
 RUN set -ex \
     && curl -sSL "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" | \
          tar -xz --strip-components=1 -C /usr/local/bin docker/docker
